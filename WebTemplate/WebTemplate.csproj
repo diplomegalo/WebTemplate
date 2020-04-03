@@ -4,4 +4,20 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Remove="app\node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="app\node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="app\node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="app\node_modules\**" />
+    </ItemGroup>
+
 </Project>
