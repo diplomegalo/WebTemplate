@@ -16,6 +16,7 @@ namespace WebTemplate
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "app/dist/");
         }
 
@@ -30,6 +31,7 @@ namespace WebTemplate
             app.UseHttpsRedirection();
             
             app.UseRouting();
+            app.UseEndpoints(endpoint => endpoint.MapControllers());
 
             app.UseSpaStaticFiles();
             app.UseSpa(spa => spa.Options.SourcePath = "app/dist/");
