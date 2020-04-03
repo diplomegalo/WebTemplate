@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\pad.WAVENET\.Rider2019.3\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\pad.WAVENET\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\pad.WAVENET\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_WebTemplate.984137094.00" t="ExcludeRecursive" />
+    <e p="C:\Users\pad.WAVENET\RiderProjects\WebTemplate" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="WebTemplate" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="WebTemplate.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="WebTemplate.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="WebTemplate.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
