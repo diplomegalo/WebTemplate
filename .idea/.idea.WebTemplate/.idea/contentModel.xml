@@ -7,11 +7,11 @@
     <e p="C:\Users\pad.WAVENET\RiderProjects\WebTemplate" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="WebTemplate" t="IncludeRecursive">
+        <e p=".gitignore" t="Include" />
         <e p="app" t="Include">
           <e p=".babelrc.js" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".gitignore" t="Include" />
-          <e p="dist" t="Include" />
           <e p="node_modules\@babel\core" t="IncludeRecursive" />
           <e p="node_modules\@babel\parser" t="IncludeRecursive" />
           <e p="node_modules\@babel\plugin-proposal-class-properties" t="IncludeRecursive" />
