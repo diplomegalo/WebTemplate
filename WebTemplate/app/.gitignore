@@ -1,0 +1,6 @@
+﻿# Compilated files
+/dist/
+/package-lock.json
+
+# Dependencies
+/node_modules/
