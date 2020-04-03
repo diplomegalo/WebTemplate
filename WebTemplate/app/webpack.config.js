@@ -60,7 +60,7 @@ const devConfig = {
         overlay: true,
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({ eslint: true,  }),
+        new ForkTsCheckerWebpackPlugin({ eslint: true }),
     ],
 };
 
