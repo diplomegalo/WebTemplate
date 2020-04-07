@@ -1,7 +1,7 @@
 ﻿# C# .Net Core
-bin/
-obj/
-/packages/
+**/bin/
+**/obj/
+**/packages/
 
 # Common IntelliJ Platform excludes
 
