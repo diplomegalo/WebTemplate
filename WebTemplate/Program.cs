@@ -1,25 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+// <copyright file="Program.cs" company="Delsoft">
+// Copyright (c) Delsoft. All rights reserved.
+// </copyright>
 
 namespace WebTemplate
 {
-    public class Program
+    using System;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+
+    /// <summary>
+    /// This class defines the entry points of the application.
+    /// </summary>
+    public static class Program
     {
+        /// <summary>
+        /// The main method is call first at runtime.
+        /// </summary>
+        /// <param name="args">Arguments passed to the method.</param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        }
     }
 }

@@ -2,24 +2,19 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace Data.Models
+namespace WebTemplate.Model
 {
     using System;
     using System.Linq;
 
     /// <summary>
-    /// This class defines the <see cref="Recipe" /> model.
+    /// This class defines the <see cref="Recipe" />.
     /// </summary>
-    public class Recipe : EntityBase<Recipe, int>
+    public class Recipe
     {
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the short description.
-        /// </summary>
-        public string ShortDescription { get; set; }
     }
 }

@@ -17,4 +17,4 @@
         '@babel/typescript',
         '@babel/preset-react'
     ]
-}
+};
