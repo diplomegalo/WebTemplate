@@ -11,6 +11,7 @@ namespace WebTemplate.Controllers
     using AutoMapper;
 
     using Data;
+    using Data.Exceptions;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
@@ -54,8 +55,8 @@ namespace WebTemplate.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Returns the recipe with <paramref name="id"/> as identifier.</returns>
-        [HttpGet("id")]
-        public ActionResult<WebModel.Recipe> Get(int id) => this.Ok(this.mapper.Map<WebModel.Recipe>(this.recipeRepository.GetById(id)));
+        [HttpGet("{id}")]
+        public ActionResult<WebModel.Recipe> Get(int id) => this.mapper.Map<WebModel.Recipe>(this.recipeRepository.GetById(id));
 
         /// <summary>
         /// Saves a a new recipes.
@@ -67,6 +68,46 @@ namespace WebTemplate.Controllers
         {
             recipe.Id = this.recipeRepository.Save(this.mapper.Map<DtoModel.Recipe>(recipe));
             return this.Created(this.linkGenerator.GetPathByAction("Get", "Recipe", new { id = recipe.Id }), recipe);
+        }
+
+        /// <summary>
+        /// Update the current recipe by the updated recipe.
+        /// </summary>
+        /// <param name="recipe">The recipe updated state.</param>
+        /// <returns>Returns the new state of the recipe.</returns>
+        [HttpPut]
+        public ActionResult<WebModel.Recipe> Put(WebModel.Recipe recipe)
+        {
+            try
+            {
+                this.recipeRepository.Update(this.mapper.Map<DtoModel.Recipe>(recipe));
+                return recipe;
+            }
+
+            // TODO : catch and manage exception into configuration services.
+            catch (EntityNotFoundException)
+            {
+                return this.NotFound($"Unable to retrieve the recipe: {recipe.Name}");
+            }
+        }
+
+        /// <summary>
+        /// Removes the recipe with the defined id from storage.
+        /// </summary>
+        /// <param name="id">The identifier of the recipe.</param>
+        /// <returns>Returns the Http status code of the operation.</returns>
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                this.recipeRepository.Delete(id);
+                return this.Ok();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return this.NotFound(e.Message);
+            }
         }
     }
 }

@@ -5,6 +5,8 @@
 namespace WebTemplate.Models
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     /// <summary>
@@ -15,6 +17,7 @@ namespace WebTemplate.Models
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
+        [StringLength(160)]
         public string Description { get; set; }
 
         /// <summary>
@@ -25,6 +28,12 @@ namespace WebTemplate.Models
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of ingredients.
+        /// </summary>
+        public IEnumerable<Model.DTO.Ingredient> Ingredients { get; set; }
     }
 }

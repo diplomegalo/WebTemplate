@@ -10,6 +10,8 @@ namespace Data
 
     using AutoMapper;
 
+    using Data.Exceptions;
+
     using Model;
 
     /// <summary>
@@ -40,6 +42,11 @@ namespace Data
         public void Delete(TKey id)
         {
             var entity = this.dbContext.Set<TDataModel>().Find(id);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(id);
+            }
+
             this.dbContext.Remove(entity);
             this.dbContext.SaveChanges();
         }
@@ -62,17 +69,35 @@ namespace Data
         /// <inheritdoc />
         public TKey Save(TDto entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
             entity.CreationDate = DateTime.Now;
-            var result = this.dbContext.Add(this.mapper.Map<TDataModel>(entity));
+
+            var result = this.dbContext.Add((object)this.mapper.Map<TDataModel>(entity));
             this.dbContext.SaveChanges();
+
             return (TKey)result.CurrentValues["Id"];
         }
 
         /// <inheritdoc />
         public void Update(TDto entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
             entity.UpdateDate = DateTime.Now;
+
             var actual = this.dbContext.Set<TDataModel>().Find(entity.Id);
+            if (actual == null)
+            {
+                throw new EntityNotFoundException(entity.Id);
+            }
+
             this.dbContext.Entry(actual).CurrentValues.SetValues(this.mapper.Map<TDataModel>(entity));
             this.dbContext.SaveChanges();
         }

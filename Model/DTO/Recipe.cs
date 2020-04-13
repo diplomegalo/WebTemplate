@@ -5,6 +5,7 @@
 namespace Model.DTO
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,8 +19,13 @@ namespace Model.DTO
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the short description.
+        /// Gets or sets the description.
         /// </summary>
-        public string ShortDescription { get; set; }
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of ingredients.
+        /// </summary>
+        public IEnumerable<Ingredient> Ingredients { get; set; }
     }
 }

@@ -37,6 +37,11 @@ namespace Data
             modelBuilder.Entity<Recipe>()
                 .ToTable("Recipes")
                 .HasKey(e => e.Id);
+
+            modelBuilder.Entity<Ingredient>()
+                .ToTable("Ingredient")
+                .HasKey(e => e.Id);
+
             base.OnModelCreating(modelBuilder);
         }
     }

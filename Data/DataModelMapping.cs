@@ -24,6 +24,9 @@ namespace Data
         {
             this.CreateMap<DataModel.Recipe, DtoModel.Recipe>()
                 .ReverseMap();
+
+            this.CreateMap<DataModel.Ingredient, DtoModel.Ingredient>()
+                .ReverseMap();
         }
     }
 }
