@@ -59,7 +59,7 @@ namespace Model
         /// Gets a value indicating whether this instance is transient.
         /// </summary>
         /// <value><c>true</c> if this instance is transient; otherwise, <c>false</c>.</value>
-        private bool IsTransient =>
+        public bool IsTransient =>
             (typeof(TKey).IsValueType && this.Id.Equals(default(TKey))) ||
             (!typeof(TKey).IsValueType && ReferenceEquals(this.Id, null));
 

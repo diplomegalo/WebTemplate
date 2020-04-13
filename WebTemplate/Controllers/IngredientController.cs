@@ -4,12 +4,17 @@
 
 namespace WebTemplate.Controllers
 {
+    using System;
+    using System.Linq;
+
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// This controller manage the ingredient entity.
     /// </summary>
-    public class IngredientController: ControllerBase
+    [ApiController]
+    [Route("api/recipe/{id}/ingredient")]
+    public class IngredientController : ControllerBase
     {
     }
 }

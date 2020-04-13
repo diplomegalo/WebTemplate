@@ -14,11 +14,6 @@ namespace Model.DTO
     public class Recipe : EntityBase<Recipe, int>
     {
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the description.
         /// </summary>
         public string Description { get; set; }
@@ -27,5 +22,10 @@ namespace Model.DTO
         /// Gets or sets the list of ingredients.
         /// </summary>
         public IEnumerable<Ingredient> Ingredients { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
     }
 }

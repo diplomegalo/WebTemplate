@@ -10,6 +10,8 @@ namespace WebTemplate.Controllers
 
     using AutoMapper;
 
+    using Business;
+
     using Data;
     using Data.Exceptions;
 
@@ -17,6 +19,7 @@ namespace WebTemplate.Controllers
     using Microsoft.AspNetCore.Routing;
 
     using DtoModel = Model.DTO;
+    using IRecipeDomain = Business.IRecipeDomain;
     using WebModel = WebTemplate.Models;
 
     /// <summary>
@@ -28,67 +31,19 @@ namespace WebTemplate.Controllers
     {
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
-        private readonly IRecipeRepository recipeRepository;
+        private readonly IRecipeDomain recipeDomain;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeController"/> class.
         /// </summary>
-        /// <param name="recipeRepository">The recipes repository.</param>
+        /// <param name="recipeDomain">The recipe domain.</param>
         /// <param name="mapper">The mapper object.</param>
         /// <param name="linkGenerator">The link generator.</param>
-        public RecipeController(IRecipeRepository recipeRepository, IMapper mapper, LinkGenerator linkGenerator)
+        public RecipeController(IRecipeDomain recipeDomain, IMapper mapper, LinkGenerator linkGenerator)
         {
-            this.recipeRepository = recipeRepository;
+            this.recipeDomain = recipeDomain;
             this.mapper = mapper;
             this.linkGenerator = linkGenerator;
-        }
-
-        /// <summary>
-        /// Gets all recipes.
-        /// </summary>
-        /// <returns>Returns the list of all recipes.</returns>
-        [HttpGet]
-        public ActionResult<IEnumerable<WebModel.Recipe>> Get() => this.Ok(this.recipeRepository.GetAll().Select(s => this.mapper.Map<WebModel.Recipe>(s)));
-
-        /// <summary>
-        /// Gets the recipes by the defines identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Returns the recipe with <paramref name="id"/> as identifier.</returns>
-        [HttpGet("{id}")]
-        public ActionResult<WebModel.Recipe> Get(int id) => this.mapper.Map<WebModel.Recipe>(this.recipeRepository.GetById(id));
-
-        /// <summary>
-        /// Saves a a new recipes.
-        /// </summary>
-        /// <param name="recipe">The recipes to save.</param>
-        /// <returns>Returns the identifier.</returns>
-        [HttpPost]
-        public ActionResult<WebModel.Recipe> Post(WebModel.Recipe recipe)
-        {
-            recipe.Id = this.recipeRepository.Save(this.mapper.Map<DtoModel.Recipe>(recipe));
-            return this.Created(this.linkGenerator.GetPathByAction("Get", "Recipe", new { id = recipe.Id }), recipe);
-        }
-
-        /// <summary>
-        /// Update the current recipe by the updated recipe.
-        /// </summary>
-        /// <param name="recipe">The recipe updated state.</param>
-        /// <returns>Returns the new state of the recipe.</returns>
-        [HttpPut]
-        public ActionResult<WebModel.Recipe> Put(WebModel.Recipe recipe)
-        {
-            try
-            {
-                this.recipeRepository.Update(this.mapper.Map<DtoModel.Recipe>(recipe));
-                return recipe;
-            }
-
-            // TODO : catch and manage exception into configuration services.
-            catch (EntityNotFoundException)
-            {
-                return this.NotFound($"Unable to retrieve the recipe: {recipe.Name}");
-            }
         }
 
         /// <summary>
@@ -101,12 +56,58 @@ namespace WebTemplate.Controllers
         {
             try
             {
-                this.recipeRepository.Delete(id);
+                this.recipeDomain.Remove(id);
                 return this.Ok();
             }
             catch (EntityNotFoundException e)
             {
                 return this.NotFound(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets all recipes.
+        /// </summary>
+        /// <returns>Returns the list of all recipes.</returns>
+        [HttpGet]
+        public ActionResult<IEnumerable<WebModel.Recipe>> Get() => this.Ok(this.recipeDomain.RetrieveList().Select(s => this.mapper.Map<WebModel.Recipe>(s)));
+
+        /// <summary>
+        /// Gets the recipes by the defines identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Returns the recipe with <paramref name="id"/> as identifier.</returns>
+        [HttpGet("{id}")]
+        public ActionResult<WebModel.Recipe> Get(int id) => this.mapper.Map<WebModel.Recipe>(this.recipeDomain.Retrieve(id));
+
+        /// <summary>
+        /// Saves a a new recipes.
+        /// </summary>
+        /// <param name="recipe">The recipes to save.</param>
+        /// <returns>Returns the identifier.</returns>
+        [HttpPost]
+        public ActionResult<WebModel.Recipe> Post(WebModel.Recipe recipe) => this.Created(
+                this.linkGenerator.GetPathByAction("Get", "Recipe", new { id = recipe.Id }),
+                this.recipeDomain.Register(this.mapper.Map<DtoModel.Recipe>(recipe)));
+
+        /// <summary>
+        /// Update the current recipe by the updated recipe.
+        /// </summary>
+        /// <param name="recipe">The recipe updated state.</param>
+        /// <returns>Returns the new state of the recipe.</returns>
+        [HttpPut]
+        public ActionResult<WebModel.Recipe> Put(WebModel.Recipe recipe)
+        {
+            try
+            {
+                return this.mapper.Map<WebModel.Recipe>(
+                    this.recipeDomain.Register(this.mapper.Map<DtoModel.Recipe>(recipe)));
+            }
+
+            // TODO : catch and manage exception into configuration services.
+            catch (EntityNotFoundException)
+            {
+                return this.NotFound($"Unable to retrieve the recipe: {recipe.Name}");
             }
         }
     }

@@ -26,14 +26,14 @@ namespace WebTemplate.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of ingredients.
+        /// </summary>
+        public IEnumerable<Model.DTO.Ingredient> Ingredients { get; set; }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [Required]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of ingredients.
-        /// </summary>
-        public IEnumerable<Model.DTO.Ingredient> Ingredients { get; set; }
     }
 }

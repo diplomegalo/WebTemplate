@@ -4,6 +4,9 @@
 
 namespace Data
 {
+    using System;
+    using System.Linq;
+
     using AutoMapper;
 
     using DataModel = Data.Models;
@@ -19,7 +22,7 @@ namespace Data
         /// </summary>
         /// <param name="dbContext">The db context.</param>
         /// <param name="mapper">The mapper object.</param>
-        public IngredientRepository(DataContext dbContext, IMapper mapper) 
+        public IngredientRepository(DataContext dbContext, IMapper mapper)
             : base(dbContext, mapper)
         {
         }

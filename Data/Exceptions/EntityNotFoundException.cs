@@ -5,6 +5,7 @@
 namespace Data.Exceptions
 {
     using System;
+    using System.Linq;
 
     /// <summary>
     /// This class defines the exception that occurs when entity is not found.
@@ -16,7 +17,7 @@ namespace Data.Exceptions
         /// </summary>
         /// <param name="message">The error message.</param>
         public EntityNotFoundException(string message)
-             : base(message)
+            : base(message)
         {
         }
 

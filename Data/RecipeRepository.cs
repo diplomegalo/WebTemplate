@@ -1,6 +1,6 @@
 ﻿// <copyright file="RecipeRepository.cs" company="Delsoft">
-//  Copyright (c) Delsoft. All rights reserved.
-//  </copyright>
+// Copyright (c) Delsoft. All rights reserved.
+// </copyright>
 
 namespace Data
 {

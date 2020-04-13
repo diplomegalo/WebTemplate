@@ -5,7 +5,6 @@
 namespace Data.Models
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -22,13 +21,13 @@ namespace Data.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the list of ingredients.
         /// </summary>
         public IEnumerable<Ingredient> Ingredients { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
     }
 }

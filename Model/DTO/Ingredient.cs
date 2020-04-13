@@ -4,6 +4,9 @@
 
 namespace Model.DTO
 {
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// This class defines the ingredient model.
     /// </summary>

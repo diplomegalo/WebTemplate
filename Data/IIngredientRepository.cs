@@ -4,6 +4,9 @@
 
 namespace Data
 {
+    using System;
+    using System.Linq;
+
     using DataModel = Data.Models;
     using DtoModel = Model.DTO;
 
