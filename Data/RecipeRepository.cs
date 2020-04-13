@@ -4,18 +4,18 @@
 
 namespace Data
 {
+    using System;
+    using System.Linq;
+
     using AutoMapper;
 
-    using Data.Models;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Model.DTO;
+    using DataModel = Data.Models;
+    using DtoModel = Model.DTO;
 
     /// <summary>
-    /// This class defines the methods to manage storage of <see cref="Recipe"/> model.
+    /// This class defines the methods to manage storage of <see cref="Model.DTO.Recipe"/> model.
     /// </summary>
-    public class RecipeRepository : RepositoryBase<Recipes, Recipe, int>, IRecipeRepository
+    public class RecipeRepository : RepositoryBase<DataModel.Recipe, DtoModel.Recipe, int>, IRecipeRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeRepository"/> class.

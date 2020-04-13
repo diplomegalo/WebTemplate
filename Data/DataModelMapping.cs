@@ -4,7 +4,11 @@
 
 namespace Data
 {
+    using System;
+    using System.Linq;
+
     using AutoMapper;
+
     using DataModel = Data.Models;
     using DtoModel = Model.DTO;
 
@@ -18,7 +22,7 @@ namespace Data
         /// </summary>
         public DataModelMapping()
         {
-            this.CreateMap<DataModel.Recipes, DtoModel.Recipe>()
+            this.CreateMap<DataModel.Recipe, DtoModel.Recipe>()
                 .ReverseMap();
         }
     }

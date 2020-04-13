@@ -6,6 +6,7 @@ namespace WebTemplate
 {
     using System;
     using System.Linq;
+    using System.Reflection;
 
     using AutoMapper;
 
@@ -52,8 +53,11 @@ namespace WebTemplate
             // Data
             services.AddDbContext<DataContext>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
-            services.AddAutoMapper(typeof(DataModelMapping));
+            services.AddAutoMapper(
+                cfg => cfg.AddMaps(typeof(DataModelMapping), typeof(WebModelMapping)),
+                typeof(Startup));
 
+            // Controller
             services.AddControllers();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "app/dist/");
         }

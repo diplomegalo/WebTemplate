@@ -10,8 +10,6 @@ namespace Data
 
     using AutoMapper;
 
-    using Microsoft.EntityFrameworkCore;
-
     using Model;
 
     /// <summary>
@@ -43,6 +41,7 @@ namespace Data
         {
             var entity = this.dbContext.Set<TDataModel>().Find(id);
             this.dbContext.Remove(entity);
+            this.dbContext.SaveChanges();
         }
 
         /// <inheritdoc />
@@ -64,16 +63,18 @@ namespace Data
         public TKey Save(TDto entity)
         {
             entity.CreationDate = DateTime.Now;
-            return this.dbContext.Add(entity).Entity.Id;
+            var result = this.dbContext.Add(this.mapper.Map<TDataModel>(entity));
+            this.dbContext.SaveChanges();
+            return (TKey)result.CurrentValues["Id"];
         }
 
         /// <inheritdoc />
         public void Update(TDto entity)
         {
             entity.UpdateDate = DateTime.Now;
-
-            var actual = this.dbContext.Set<TDto>().Find(entity.Id);
-            this.dbContext.Entry(actual).CurrentValues.SetValues(entity);
+            var actual = this.dbContext.Set<TDataModel>().Find(entity.Id);
+            this.dbContext.Entry(actual).CurrentValues.SetValues(this.mapper.Map<TDataModel>(entity));
+            this.dbContext.SaveChanges();
         }
     }
 }

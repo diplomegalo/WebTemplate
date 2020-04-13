@@ -1,26 +1,23 @@
 ﻿// <copyright file="Recipe.cs" company="Delsoft">
-// Copyright (c) Delsoft. All rights reserved.
-// </copyright>
+//  Copyright (c) Delsoft. All rights reserved.
+//  </copyright>
 
-namespace WebTemplate.Models
+namespace Data.Models
 {
     using System;
     using System.Linq;
 
+    using Model;
+
     /// <summary>
-    /// This class defines the <see cref="Recipe" />.
+    /// This class defines the <see cref="Recipe"/> model.
     /// </summary>
-    public class Recipe
+    public class Recipe : EntityBase<Recipe, int>
     {
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

@@ -4,14 +4,16 @@
 
 namespace Data
 {
-    using Data.Models;
+    using System;
+    using System.Linq;
 
-    using Model.DTO;
+    using DataModel = Data.Models;
+    using DtoModel = Model.DTO;
 
     /// <summary>
-    /// This interface defines methods for the <see cref="Recipe"/> data.
+    /// This interface defines methods for the <see cref="Model.DTO.Recipe"/> data.
     /// </summary>
-    public interface IRecipeRepository : IRepositoryBase<Recipes, Recipe, int>
+    public interface IRecipeRepository : IRepositoryBase<DataModel.Recipe, DtoModel.Recipe, int>
     {
     }
 }

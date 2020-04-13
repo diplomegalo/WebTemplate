@@ -1,10 +1,14 @@
-﻿// <copyright file="ViewModelMapping.cs" company="Delsoft">
+﻿// <copyright file="WebModelMapping.cs" company="Delsoft">
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
 namespace WebTemplate
 {
+    using System;
+    using System.Linq;
+
     using AutoMapper;
+
     using DtoModel = Model.DTO;
     using WebModel = WebTemplate.Models;
 
