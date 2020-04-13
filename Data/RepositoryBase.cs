@@ -8,68 +8,72 @@ namespace Data
     using System.Collections.Generic;
     using System.Linq;
 
-    using Data.Models;
+    using AutoMapper;
 
     using Microsoft.EntityFrameworkCore;
 
+    using Model;
+
     /// <summary>
-    /// This class defines the <see cref="RepositoryBase{TEntity,TKey}" />.
+    /// This class defines the <see cref="RepositoryBase{TDataModel, TDto, TKey}" />.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <typeparam name="TDataModel">The type of the data model.</typeparam>
+    /// <typeparam name="TDto">The type of the entity.</typeparam>
     /// <typeparam name="TKey">The type of the entity id.</typeparam>
-    public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey>
-        where TEntity : EntityBase<TEntity, TKey>
+    public abstract class RepositoryBase<TDataModel, TDto, TKey> : IRepositoryBase<TDataModel, TDto, TKey>
+        where TDto : EntityBase<TDto, TKey>
+        where TDataModel : EntityBase<TDataModel, TKey>
     {
-        private readonly DbContext context;
+        private readonly DataContext dbContext;
+        private readonly IMapper mapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RepositoryBase{TEntity, TKey}" /> class.
+        /// Initializes a new instance of the <see cref="RepositoryBase{TDataModel, TDto, TKey}" /> class.
         /// </summary>
-        /// <param name="context">The Entity Framework context.</param>
-        protected RepositoryBase(DbContext context)
+        /// <param name="dbContext">The Entity Framework context.</param>
+        /// <param name="mapper">The mapper object.</param>
+        protected RepositoryBase(DataContext dbContext, IMapper mapper)
         {
-            this.context = context;
+            this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
         /// <inheritdoc />
         public void Delete(TKey id)
         {
-            var entity = this.context.Set<TEntity>().Find(id);
-            this.context.Remove(entity);
+            var entity = this.dbContext.Set<TDataModel>().Find(id);
+            this.dbContext.Remove(entity);
         }
 
         /// <inheritdoc />
-        public IEnumerable<TEntity> GetAll()
-        {
-            return this.context.Set<TEntity>();
-        }
+        public IEnumerable<TDto> GetAll() =>
+            this.dbContext.Set<TDataModel>()
+                .ToList()
+                .Select(s => this.mapper.Map<TDto>(s));
 
         /// <inheritdoc />
-        public IEnumerable<TEntity> GetBy(Func<TEntity, bool> predicate)
-        {
-            return this.context.Set<TEntity>().Where(predicate).ToList();
-        }
+        public IEnumerable<TDto> GetBy(Func<TDataModel, bool> predicate) =>
+            this.dbContext.Set<TDataModel>()
+                .Where(predicate)
+                .Select(s => this.mapper.Map<TDto>(s));
 
         /// <inheritdoc />
-        public TEntity GetById(TKey id)
-        {
-            return this.context.Set<TEntity>().Find(id);
-        }
+        public TDto GetById(TKey id) => this.mapper.Map<TDto>(this.dbContext.Set<TDataModel>().Find(id));
 
         /// <inheritdoc />
-        public TKey Save(TEntity entity)
+        public TKey Save(TDto entity)
         {
             entity.CreationDate = DateTime.Now;
-            return this.context.Add(entity).Entity.Id;
+            return this.dbContext.Add(entity).Entity.Id;
         }
 
         /// <inheritdoc />
-        public void Update(TEntity entity)
+        public void Update(TDto entity)
         {
             entity.UpdateDate = DateTime.Now;
 
-            var actual = this.context.Set<TEntity>().Find(entity.Id);
-            this.context.Entry(actual).CurrentValues.SetValues(entity);
+            var actual = this.dbContext.Set<TDto>().Find(entity.Id);
+            this.dbContext.Entry(actual).CurrentValues.SetValues(entity);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Data
     using System.Reflection;
 
     using Data.Models;
-
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
@@ -20,7 +19,7 @@ namespace Data
         /// <summary>
         /// Gets or sets the Vegetables data.
         /// </summary>
-        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Recipes> Recipes { get; set; }
 
         /// <inheritdoc />
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,7 +33,7 @@ namespace Data
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<Recipes>()
                 .ToTable("Recipes")
                 .HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);

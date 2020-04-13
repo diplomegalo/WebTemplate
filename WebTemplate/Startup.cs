@@ -7,6 +7,8 @@ namespace WebTemplate
     using System;
     using System.Linq;
 
+    using AutoMapper;
+
     using Data;
 
     using Microsoft.AspNetCore.Builder;
@@ -49,6 +51,8 @@ namespace WebTemplate
         {
             // Data
             services.AddDbContext<DataContext>();
+            services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddAutoMapper(typeof(DataModelMapping));
 
             services.AddControllers();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "app/dist/");

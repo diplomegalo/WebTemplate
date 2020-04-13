@@ -8,15 +8,17 @@ namespace Data
     using System.Collections.Generic;
     using System.Linq;
 
-    using Data.Models;
+    using Model;
 
     /// <summary>
-    /// This interface defines the <see cref="IRepositoryBase{TEntity,TKey}" />.
+    /// This interface defines the <see cref="IRepositoryBase{TDataModel, TDto, TKey}" />.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <typeparam name="TKey">The type of the entity id.</typeparam>
-    public interface IRepositoryBase<TEntity, TKey>
-        where TEntity : EntityBase<TEntity, TKey>
+    /// <typeparam name="TDataModel">The type representing the data model.</typeparam>
+    /// <typeparam name="TDto">The type representing the data transfer object model.</typeparam>
+    /// <typeparam name="TKey">The type of the entity identifier.</typeparam>
+    public interface IRepositoryBase<TDataModel, TDto, TKey>
+        where TDto : EntityBase<TDto, TKey>
+        where TDataModel : EntityBase<TDataModel, TKey>
     {
         /// <summary>
         /// Deletes the entity matching the identifier.
@@ -28,33 +30,34 @@ namespace Data
         /// Gets all entity.
         /// </summary>
         /// <returns>Returns a <see cref="IEnumerable{TEntity}" />.</returns>
-        IEnumerable<TEntity> GetAll();
+        IEnumerable<TDto> GetAll();
 
         /// <summary>
         /// Gets the list of entity matching filters.
         /// </summary>
-        /// <param name="predicate">The filters.</param>
+        /// <param name="predicate">The filters to apply to the query
+        /// .</param>
         /// <returns>Returns the <see cref="IEnumerable{TEntity}" /> filters by <paramref name="predicate" />.</returns>
-        IEnumerable<TEntity> GetBy(Func<TEntity, bool> predicate);
+        IEnumerable<TDto> GetBy(Func<TDataModel, bool> predicate);
 
         /// <summary>
         /// Gets the entity matching the identifier.
         /// </summary>
         /// <param name="id">The entity identifier.</param>
         /// <returns>Returns the entity having the identifier equals to <paramref name="id" /> value.</returns>
-        TEntity GetById(TKey id);
+        TDto GetById(TKey id);
 
         /// <summary>
         /// Saves a new records of entity.
         /// </summary>
         /// <param name="entity">The new entity.</param>
         /// <returns>Returns the identifier recorded from storage.</returns>
-        TKey Save(TEntity entity);
+        TKey Save(TDto entity);
 
         /// <summary>
         /// Updates the entity.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        void Update(TEntity entity);
+        void Update(TDto entity);
     }
 }

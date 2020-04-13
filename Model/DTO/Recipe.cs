@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace Data.Models
+namespace Model.DTO
 {
     using System;
     using System.Linq;
