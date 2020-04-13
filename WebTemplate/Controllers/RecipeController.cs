@@ -10,9 +10,6 @@ namespace WebTemplate.Controllers
 
     using AutoMapper;
 
-    using Business;
-
-    using Data;
     using Data.Exceptions;
 
     using Microsoft.AspNetCore.Mvc;
