@@ -9,11 +9,11 @@ namespace Data
 
     using AutoMapper;
 
-    using DataModel = Data.Models;
+    using DataModel = Data.Entities;
     using DtoModel = Model.DTO;
 
     /// <summary>
-    /// This class defines the methods to manage storage of <see cref="Model.DTO.Recipe"/> model.
+    /// This class defines the methods to manage storage of recipe model.
     /// </summary>
     public class RecipeRepository : RepositoryBase<DataModel.Recipe, DtoModel.Recipe, int>, IRecipeRepository
     {

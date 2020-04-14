@@ -1,4 +1,4 @@
-﻿// <copyright file="WebModelMapping.cs" company="Delsoft">
+﻿// <copyright file="WebMapping.cs" company="Delsoft">
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
@@ -15,14 +15,17 @@ namespace WebTemplate
     /// <summary>
     /// This class defines the mapping between web model and dto.
     /// </summary>
-    public class WebModelMapping : Profile
+    public class WebMapping : Profile
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebModelMapping"/> class.
+        /// Initializes a new instance of the <see cref="WebMapping"/> class.
         /// </summary>
-        public WebModelMapping()
+        public WebMapping()
         {
             this.CreateMap<DtoModel.Recipe, WebModel.Recipe>()
+                .ReverseMap();
+
+            this.CreateMap<DtoModel.Ingredient, WebModel.Ingredient>()
                 .ReverseMap();
         }
     }

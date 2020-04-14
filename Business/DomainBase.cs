@@ -17,7 +17,7 @@ namespace Business
     /// <typeparam name="TEntity">The type of entity manage by the domain.</typeparam>
     /// <typeparam name="TKey">The type of the identifier.</typeparam>
     public abstract class DomainBase<TEntity, TKey> : IDomainBase<TEntity, TKey>
-        where TEntity : EntityBase<TEntity, TKey>
+        where TEntity : ObjectModel<TEntity, TKey>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DomainBase{TEntity, TKey}"/> class.

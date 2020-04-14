@@ -8,15 +8,22 @@ namespace Data
     using System.Linq;
     using System.Reflection;
 
-    using Data.Models;
+    using Data.Entities;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// This class defines the data context of the application.
     /// </summary>
     public class DataContext : DbContext
     {
+        /// <summary>
+        /// The logger factory.
+        /// </summary>
+        private static readonly ILoggerFactory ContextLoggerFactory =
+            LoggerFactory.Create(builder => builder.AddConsole());
+
         /// <summary>
         /// Gets or sets the Vegetables data.
         /// </summary>
@@ -25,7 +32,10 @@ namespace Data
         /// <inheritdoc />
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(
+            optionsBuilder
+                .UseLoggerFactory(ContextLoggerFactory)
+                .EnableSensitiveDataLogging()
+                .UseSqlite(
                 "Filename=../Data/web-template.sqlite",
                 options => options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
             base.OnConfiguring(optionsBuilder);
@@ -39,8 +49,22 @@ namespace Data
                 .HasKey(e => e.Id);
 
             modelBuilder.Entity<Ingredient>()
-                .ToTable("Ingredient")
+                .ToTable("Ingredients")
                 .HasKey(e => e.Id);
+
+            modelBuilder.Entity<RecipeIngredient>()
+                .ToTable("RecipeIngredient")
+                .HasKey(e => new { e.IngredientId, e.RecipeId });
+
+            modelBuilder.Entity<RecipeIngredient>()
+                .HasOne(e => e.Ingredient)
+                .WithMany(e => e.RecipeIngredients)
+                .HasForeignKey(e => e.RecipeId);
+
+            modelBuilder.Entity<RecipeIngredient>()
+                .HasOne(e => e.Ingredient)
+                .WithMany(e => e.RecipeIngredients)
+                .HasForeignKey(e => e.IngredientId);
 
             base.OnModelCreating(modelBuilder);
         }

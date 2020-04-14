@@ -2,7 +2,7 @@
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
-namespace Data.Models
+namespace Data.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -13,21 +13,29 @@ namespace Data.Models
     /// <summary>
     /// This class defines the <see cref="Recipe"/> model.
     /// </summary>
-    public class Recipe : EntityBase<Recipe, int>
+    public class Recipe : ObjectModel<Recipe, int>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Recipe"/> class.
+        /// </summary>
+        public Recipe()
+        {
+            this.RecipeIngredients = new HashSet<RecipeIngredient>();
+        }
+
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of ingredients.
-        /// </summary>
-        public IEnumerable<Ingredient> Ingredients { get; set; }
-
-        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of ingredients.
+        /// </summary>
+        public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }

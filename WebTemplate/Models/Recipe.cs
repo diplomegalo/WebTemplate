@@ -28,7 +28,7 @@ namespace WebTemplate.Models
         /// <summary>
         /// Gets or sets the list of ingredients.
         /// </summary>
-        public IEnumerable<Model.DTO.Ingredient> Ingredients { get; set; }
+        public IEnumerable<Ingredient> Ingredients { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

@@ -16,7 +16,7 @@ namespace Data
     /// <typeparam name="TDto">The type of the entity.</typeparam>
     /// <typeparam name="TKey">The type of the identifier.</typeparam>
     public interface IRepositoryBase<TDto, TKey>
-        where TDto : EntityBase<TDto, TKey>
+        where TDto : ObjectModel<TDto, TKey>
     {
         /// <summary>
         /// Deletes the entity matching the identifier.
@@ -58,8 +58,8 @@ namespace Data
     /// <typeparam name="TDto">The type representing the data transfer object model.</typeparam>
     /// <typeparam name="TKey">The type of the entity identifier.</typeparam>
     public interface IRepositoryBase<TDataModel, TDto, TKey> : IRepositoryBase<TDto, TKey>
-        where TDto : EntityBase<TDto, TKey>
-        where TDataModel : EntityBase<TDataModel, TKey>
+        where TDto : ObjectModel<TDto, TKey>
+        where TDataModel : ObjectModel<TDataModel, TKey>
     {
         /// <summary>
         /// Gets the list of entity matching filters.

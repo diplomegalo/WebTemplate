@@ -5,16 +5,22 @@
 namespace Model.DTO
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// This class defines the ingredient model.
     /// </summary>
-    public class Ingredient : EntityBase<Ingredient, int>
+    public class Ingredient : ObjectModel<Ingredient, int>
     {
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of recipes.
+        /// </summary>
+        public IEnumerable<Recipe> Recipes { get; set; }
     }
 }

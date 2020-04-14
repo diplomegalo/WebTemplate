@@ -10,13 +10,14 @@ namespace WebTemplate.Controllers
 
     using AutoMapper;
 
-    using Data.Exceptions;
+    using Business;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
 
+    using Model.Exceptions;
+
     using DtoModel = Model.DTO;
-    using IRecipeDomain = Business.IRecipeDomain;
     using WebModel = WebTemplate.Models;
 
     /// <summary>
@@ -47,20 +48,8 @@ namespace WebTemplate.Controllers
         /// Removes the recipe with the defined id from storage.
         /// </summary>
         /// <param name="id">The identifier of the recipe.</param>
-        /// <returns>Returns the Http status code of the operation.</returns>
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                this.recipeDomain.Remove(id);
-                return this.Ok();
-            }
-            catch (EntityNotFoundException e)
-            {
-                return this.NotFound(e.Message);
-            }
-        }
+        public void Delete(int id) => this.recipeDomain.Remove(id);
 
         /// <summary>
         /// Gets all recipes.
@@ -83,7 +72,8 @@ namespace WebTemplate.Controllers
         /// <param name="recipe">The recipes to save.</param>
         /// <returns>Returns the identifier.</returns>
         [HttpPost]
-        public ActionResult<WebModel.Recipe> Post(WebModel.Recipe recipe) => this.Created(
+        public ActionResult<WebModel.Recipe> Post(WebModel.Recipe recipe) =>
+            this.Created(
                 this.linkGenerator.GetPathByAction("Get", "Recipe", new { id = recipe.Id }),
                 this.recipeDomain.Register(this.mapper.Map<DtoModel.Recipe>(recipe)));
 

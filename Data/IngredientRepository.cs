@@ -9,7 +9,7 @@ namespace Data
 
     using AutoMapper;
 
-    using DataModel = Data.Models;
+    using DataModel = Data.Entities;
     using DtoModel = Model.DTO;
 
     /// <summary>

@@ -5,6 +5,7 @@
 namespace WebTemplate.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     /// <summary>
@@ -20,6 +21,7 @@ namespace WebTemplate.Models
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [Required]
         public string Name { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Model.DTO
     /// <summary>
     /// This class defines the <see cref="Recipe" /> model.
     /// </summary>
-    public class Recipe : EntityBase<Recipe, int>
+    public class Recipe : ObjectModel<Recipe, int>
     {
         /// <summary>
         /// Gets or sets the description.

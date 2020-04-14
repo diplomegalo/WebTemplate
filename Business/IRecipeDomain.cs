@@ -4,7 +4,9 @@
 
 namespace Business
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Model.DTO;
 
@@ -14,7 +16,14 @@ namespace Business
     public interface IRecipeDomain : IDomainBase<Recipe, int>
     {
         /// <summary>
-        /// Retrives the list of recipe.
+        /// Adds ingredient to recipe.
+        /// </summary>
+        /// <param name="id">The recipe identifier.</param>
+        /// <param name="ingredient">The ingredient to add.</param>
+        void AddIngredient(int id, Ingredient ingredient);
+
+        /// <summary>
+        /// Retrieves the list of recipe.
         /// </summary>
         /// <returns>Returns the list of recipe.</returns>
         IEnumerable<Recipe> RetrieveList();

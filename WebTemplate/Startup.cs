@@ -9,6 +9,8 @@ namespace WebTemplate
 
     using AutoMapper;
 
+    using Business;
+
     using Data;
 
     using Microsoft.AspNetCore.Builder;
@@ -52,8 +54,13 @@ namespace WebTemplate
             // Data
             services.AddDbContext<DataContext>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+
+            // Business
+            services.AddScoped<IRecipeDomain, RecipeDomain>();
+
             services.AddAutoMapper(
-                cfg => cfg.AddMaps(typeof(DataModelMapping), typeof(WebModelMapping)),
+                cfg => cfg.AddMaps(typeof(DataMapping), typeof(WebMapping)),
                 typeof(Startup));
 
             // Controller

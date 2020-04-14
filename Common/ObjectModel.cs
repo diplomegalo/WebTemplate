@@ -1,4 +1,4 @@
-﻿// <copyright file="EntityBase.cs" company="Delsoft">
+﻿// <copyright file="ObjectModel.cs" company="Delsoft">
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,12 @@ namespace Model
     using System.Linq;
 
     /// <summary>
-    /// This class defines <see cref="EntityBase{TEntity,TKey}" />.
+    /// This class defines the base implementation for models.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <typeparam name="TKey">The type of the <see cref="EntityBase{TEntity,TKey}.Id" />.</typeparam>
-    public abstract class EntityBase<TEntity, TKey> : IEquatable<TEntity>
-        where TEntity : EntityBase<TEntity, TKey>
+    /// <typeparam name="T">The type of the model.</typeparam>
+    /// <typeparam name="TKey">The type of the identifier.</typeparam>
+    public abstract class ObjectModel<T, TKey> : IEquatable<T>
+        where T : ObjectModel<T, TKey>
     {
         private int hashcode;
 
@@ -34,7 +34,7 @@ namespace Model
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        /// <remarks>This property hides the base <see cref="EntityBase{TEntity,TKey}.Id" /> property.</remarks>
+        /// <remarks>This property hides the base <see cref="ObjectModel{TEntity,TKey}.Id" /> property.</remarks>
         public TKey Id { get; set; }
 
         /// <summary>
@@ -42,6 +42,14 @@ namespace Model
         /// </summary>
         /// <value><c>true</c> if this instance is deleted; otherwise, <c>false</c>.</value>
         public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is transient.
+        /// </summary>
+        /// <value><c>true</c> if this instance is transient; otherwise, <c>false</c>.</value>
+        public bool IsTransient =>
+            (typeof(TKey).IsValueType && this.Id.Equals(default(TKey))) ||
+            (!typeof(TKey).IsValueType && ReferenceEquals(this.Id, null));
 
         /// <summary>
         /// Gets or sets the update date.
@@ -56,20 +64,12 @@ namespace Model
         public string UpdateUser { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is transient.
-        /// </summary>
-        /// <value><c>true</c> if this instance is transient; otherwise, <c>false</c>.</value>
-        public bool IsTransient =>
-            (typeof(TKey).IsValueType && this.Id.Equals(default(TKey))) ||
-            (!typeof(TKey).IsValueType && ReferenceEquals(this.Id, null));
-
-        /// <summary>
         /// Implements the operator ==.
         /// </summary>
         /// <param name="a">The left operand.</param>
         /// <param name="b">The right operand.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator ==(EntityBase<TEntity, TKey> a, EntityBase<TEntity, TKey> b)
+        public static bool operator ==(ObjectModel<T, TKey> a, ObjectModel<T, TKey> b)
         {
             return ReferenceEquals(a, b) || a?.Equals(b) == true;
         }
@@ -80,13 +80,13 @@ namespace Model
         /// <param name="a">The left operand.</param>
         /// <param name="b">The right operand.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator !=(EntityBase<TEntity, TKey> a, EntityBase<TEntity, TKey> b)
+        public static bool operator !=(ObjectModel<T, TKey> a, ObjectModel<T, TKey> b)
         {
             return !(a == b);
         }
 
         /// <inheritdoc />
-        public bool Equals(TEntity other)
+        public bool Equals(T other)
         {
             return other != null &&
                    !this.IsTransient &&
@@ -97,7 +97,7 @@ namespace Model
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj != null && obj is TEntity entity && this.Id.Equals(entity);
+            return obj != null && obj is T entity && this.Id.Equals(entity);
         }
 
         /// <inheritdoc />

@@ -7,7 +7,7 @@ namespace Data
     using System;
     using System.Linq;
 
-    using DataModel = Data.Models;
+    using DataModel = Data.Entities;
     using DtoModel = Model.DTO;
 
     /// <summary>

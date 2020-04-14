@@ -15,7 +15,7 @@ namespace Business
     /// <typeparam name="TEntity">The type of the entity manage by the domain.</typeparam>
     /// <typeparam name="TKey">The type of the entity identifier.</typeparam>
     public interface IDomainBase<TEntity, TKey>
-        where TEntity : EntityBase<TEntity, TKey>
+        where TEntity : ObjectModel<TEntity, TKey>
     {
         /// <summary>
         /// Registers the defines entity.

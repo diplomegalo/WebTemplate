@@ -2,7 +2,7 @@
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
-namespace Data.Exceptions
+namespace Model.Exceptions
 {
     using System;
     using System.Linq;
@@ -24,9 +24,10 @@ namespace Data.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
         /// </summary>
+        /// <param name="entityType">The type of the entity </param>
         /// <param name="identifier">The entity identifier.</param>
-        public EntityNotFoundException(object identifier)
-            : base($"Unable to retrieve entity with identifier: {identifier}")
+        public EntityNotFoundException(string entityType, object identifier)
+            : base($"Unable to retrieve the entity of type {entityType} with identifier: {identifier}")
         {
         }
     }
