@@ -26,8 +26,6 @@ namespace Data
         where TDto : ObjectModel<TDto, TKey>
         where TEntity : ObjectModel<TEntity, TKey>
     {
-        private readonly IMapper mapper;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository{TEntity,TDto,TKey}" /> class.
         /// </summary>
@@ -36,13 +34,18 @@ namespace Data
         protected Repository(DataContext dbContext, IMapper mapper)
         {
             this.DbContext = dbContext;
-            this.mapper = mapper;
+            this.Mapper = mapper;
         }
 
         /// <summary>
         /// Gets the current <see cref="DbContext"/>.
         /// </summary>
         protected DataContext DbContext { get; }
+
+        /// <summary>
+        /// Gets the mapper object.
+        /// </summary>
+        protected IMapper Mapper { get; }
 
         /// <inheritdoc />
         public void Delete(TKey id)
@@ -62,7 +65,7 @@ namespace Data
             this.DbContext.Set<TEntity>()
                 .AsNoTracking()
                 .AsEnumerable()
-                .Select(s => this.mapper.Map<TDto>(s));
+                .Select(s => this.Mapper.Map<TDto>(s));
 
         /// <inheritdoc/>
         public IEnumerable<TDto> GetAll<TProperty>(Expression<Func<TEntity, TProperty>> include) =>
@@ -70,15 +73,21 @@ namespace Data
                 .Include(include)
                 .AsNoTracking()
                 .AsEnumerable()
-                .Select(s => this.mapper.Map<TDto>(s));
+                .Select(s => this.Mapper.Map<TDto>(s));
 
         /// <inheritdoc />
-        public IEnumerable<TDto> GetBy(Func<TEntity, bool> predicate) =>
-            this.DbContext.Set<TEntity>()
+        public IEnumerable<TDto> GetBy(Func<TEntity, bool> predicate)
+        {
+            var test = this.DbContext.Set<TEntity>()
                 .AsNoTracking()
                 .AsEnumerable()
                 .Where(predicate)
-                .Select(s => this.mapper.Map<TDto>(s));
+                .ToList();
+
+            var map = this.Mapper.Map<IEnumerable<TDto>>(test);
+
+            return map;
+        }
 
         /// <inheritdoc/>
         public TDto GetById<TProperty>(TKey id, Expression<Func<TEntity, TProperty>> include)
@@ -87,13 +96,13 @@ namespace Data
                 .Include(include)
                 .SingleOrDefault(s => s.Id.Equals(id));
 
-            var map = this.mapper.Map<TDto>(test);
+            var map = this.Mapper.Map<TDto>(test);
 
             return map;
         }
 
         /// <inheritdoc />
-        public TDto GetById(TKey id) => this.mapper.Map<TDto>(this.DbContext.Set<TEntity>().AsNoTracking().SingleOrDefault(s => s.Id.Equals(id)));
+        public TDto GetById(TKey id) => this.Mapper.Map<TDto>(this.DbContext.Set<TEntity>().AsNoTracking().SingleOrDefault(s => s.Id.Equals(id)));
 
         /// <inheritdoc />
         public TKey Save(TDto entity)
@@ -105,7 +114,7 @@ namespace Data
 
             entity.CreationDate = DateTime.Now;
 
-            var result = this.DbContext.Add((object)this.mapper.Map<TEntity>(entity));
+            var result = this.DbContext.Add((object)this.Mapper.Map<TEntity>(entity));
             this.DbContext.SaveChanges();
 
             return (TKey)result.CurrentValues["Id"];

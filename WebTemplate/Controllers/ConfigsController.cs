@@ -33,7 +33,7 @@ namespace WebTemplate.Controllers
         [Route("send-error")]
         public IActionResult SendError()
         {
-            return this.StatusCode(500, "Send error");
+            return this.StatusCode(500);
         }
     }
 }

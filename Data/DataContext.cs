@@ -25,6 +25,11 @@ namespace Data
             LoggerFactory.Create(builder => builder.AddConsole());
 
         /// <summary>
+        /// Gets or sets the Ingredients data.
+        /// </summary>
+        public DbSet<Ingredient> Ingredients { get; set; }
+
+        /// <summary>
         /// Gets or sets the join RecipeIngredients data.
         /// </summary>
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
@@ -33,11 +38,6 @@ namespace Data
         /// Gets or sets the Vegetables data.
         /// </summary>
         public DbSet<Recipe> Recipes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Ingredients data.
-        /// </summary>
-        public DbSet<Ingredient> Ingredients { get; set; }
 
         /// <inheritdoc />
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -65,17 +65,17 @@ namespace Data
 
             modelBuilder.Entity<RecipeIngredient>()
                 .ToTable("RecipeIngredient")
-                .HasKey(e => new { e.IngredientId, e.RecipeId });
+                .HasKey(e => new { e.RecipeId, e.IngredientId });
 
             modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(e => e.Recipe)
-                .WithMany(e => e.RecipeIngredients)
-                .HasForeignKey(e => e.RecipeId);
+                .HasOne(ri => ri.Recipe)
+                .WithMany(r => r.RecipeIngredients)
+                .HasForeignKey(r => r.RecipeId);
 
             modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(e => e.Ingredient)
-                .WithMany(e => e.RecipeIngredients)
-                .HasForeignKey(e => e.IngredientId);
+                .HasOne(ri => ri.Ingredient)
+                .WithMany(i => i.RecipeIngredients)
+                .HasForeignKey(ri => ri.IngredientId);
 
             base.OnModelCreating(modelBuilder);
         }

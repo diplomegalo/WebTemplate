@@ -5,10 +5,13 @@
 namespace Data
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
+
+    using Microsoft.EntityFrameworkCore;
 
     using Dto = Common.DTO;
     using Entity = Data.Entities;
@@ -29,10 +32,20 @@ namespace Data
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Dto.Recipe> GetAllWithIngredients() => this.GetAll(e => e.RecipeIngredients);
+        public IEnumerable<Dto.Recipe> GetAllWithIngredients() =>
+            this.Mapper.Map<IEnumerable<Dto.Recipe>>(this.DbContext.Recipes
+                .Include(r => r.RecipeIngredients)
+                .ThenInclude(ri => ri.Ingredient)
+                .AsNoTracking()
+                .AsEnumerable());
 
         /// <inheritdoc/>
-        public Dto.Recipe GetWithIngredients(int id) => this.GetById(id, recipe => recipe.RecipeIngredients);
+        public Dto.Recipe GetByIdWithIngredients(int id) =>
+            this.Mapper.Map<Dto.Recipe>(this.DbContext.Recipes
+                .Include(r => r.RecipeIngredients)
+                .ThenInclude(ri => ri.Ingredient)
+                .AsNoTracking()
+                .SingleOrDefault(s => s.Id.Equals(id)));
 
         /// <inheritdoc/>
         public void Join(int recipeId, int ingredientId)

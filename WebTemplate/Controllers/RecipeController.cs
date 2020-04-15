@@ -48,15 +48,28 @@ namespace WebTemplate.Controllers
         /// Removes the recipe with the defined id from storage.
         /// </summary>
         /// <param name="id">The identifier of the recipe.</param>
+        /// <returns>Returns the operation <see cref="IActionResult"/>.</returns>
         [HttpDelete("{id}")]
-        public void Delete(int id) => this.recipeDomain.Remove(id);
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                this.recipeDomain.Remove(id);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return this.NotFound(e.Message);
+            }
+
+            return this.Ok();
+        }
 
         /// <summary>
         /// Gets all recipes.
         /// </summary>
         /// <returns>Returns the list of all recipes.</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<WebModel.Recipe>> Get() => this.Ok(this.recipeDomain.RetrieveList().Select(s => this.mapper.Map<WebModel.Recipe>(s)));
+        public ActionResult<IEnumerable<WebModel.Recipe>> Get() => this.Ok(this.mapper.Map<IEnumerable<WebModel.Recipe>>(this.recipeDomain.RetrieveList()));
 
         /// <summary>
         /// Gets the recipes by the defines identifier.
@@ -64,7 +77,16 @@ namespace WebTemplate.Controllers
         /// <param name="id">The identifier.</param>
         /// <returns>Returns the recipe with <paramref name="id"/> as identifier.</returns>
         [HttpGet("{id}")]
-        public ActionResult<WebModel.Recipe> Get(int id) => this.mapper.Map<WebModel.Recipe>(this.recipeDomain.Retrieve(id));
+        public ActionResult<WebModel.Recipe> Get(int id)
+        {
+            var result = this.recipeDomain.Retrieve(id);
+            if (result == null)
+            {
+                return this.NotFound($"Unable to retrieve the recipe with identifier: {id}.");
+            }
+
+            return this.mapper.Map<WebModel.Recipe>(result);
+        }
 
         /// <summary>
         /// Saves a a new recipes.

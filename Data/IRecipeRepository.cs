@@ -27,7 +27,7 @@ namespace Data
         /// </summary>
         /// <param name="id">The recipe identifier.</param>
         /// <returns>Returns the recipe with the defined identifier including ingredients.</returns>
-        Dto.Recipe GetWithIngredients(int id);
+        Dto.Recipe GetByIdWithIngredients(int id);
 
         /// <summary>
         /// Join a recipe with an ingredient.

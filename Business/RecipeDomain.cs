@@ -41,6 +41,12 @@ namespace Business
                 throw new ArgumentNullException(nameof(ingredient));
             }
 
+            var dbRecipe = this.Repository.GetByIdWithIngredients(id);
+            if (dbRecipe == null)
+            {
+                throw new EntityNotFoundException(typeof(Recipe).Name, id);
+            }
+
             var dbIngredient = ingredient.IsTransient ? this.ingredientRepository.GetByName(ingredient.Name) : this.ingredientRepository.GetById(ingredient.Id);
 
             if (dbIngredient == null)
@@ -52,12 +58,6 @@ namespace Business
 
                 dbIngredient = ingredient;
                 dbIngredient.Id = this.ingredientRepository.Save(ingredient);
-            }
-
-            var dbRecipe = this.Repository.GetById(id, r => r.RecipeIngredients);
-            if (dbRecipe == null)
-            {
-                throw new EntityNotFoundException(typeof(Recipe).Name, id);
             }
 
             if (dbRecipe.Ingredients.Any(s => s.Id == dbIngredient.Id))
@@ -73,7 +73,7 @@ namespace Business
         /// </summary>
         /// <param name="id">The recipe identifier.</param>
         /// <returns>Returns the recipe with the defined id.</returns>
-        public override Recipe Retrieve(int id) => this.Repository.GetWithIngredients(id);
+        public override Recipe Retrieve(int id) => this.Repository.GetByIdWithIngredients(id);
 
         /// <summary>
         /// Retrieves the list of recipes.

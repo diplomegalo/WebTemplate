@@ -27,7 +27,7 @@ namespace Common.Exceptions
         /// <param name="entityType">The type of the entity </param>
         /// <param name="identifier">The entity identifier.</param>
         public EntityNotFoundException(string entityType, object identifier)
-            : base($"Unable to retrieve the entity of type {entityType} with identifier: {identifier}")
+            : base($"Unable to retrieve the {entityType} with identifier: {identifier}")
         {
         }
     }
