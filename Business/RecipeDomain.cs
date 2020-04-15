@@ -8,25 +8,27 @@ namespace Business
     using System.Collections.Generic;
     using System.Linq;
 
-    using Data;
+    using Common.DTO;
+    using Common.Exceptions;
 
-    using Model.DTO;
-    using Model.Exceptions;
+    using Data;
 
     /// <summary>
     /// This class defines the recipe domain.
     /// </summary>
-    public class RecipeDomain : DomainBase<Recipe, int>, IRecipeDomain
+    public class RecipeDomain : Domain<IRecipeRepository, Recipe, int>, IRecipeDomain
     {
         private readonly IIngredientRepository ingredientRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeDomain"/> class.
         /// </summary>
-        /// <param name="repository">The recipe repository.</param>
+        /// <param name="recipeRepository">The recipe repository.</param>
         /// <param name="ingredientRepository">The ingredient repository.</param>
-        public RecipeDomain(IRecipeRepository repository, IIngredientRepository ingredientRepository)
-            : base(repository)
+        public RecipeDomain(
+            IRecipeRepository recipeRepository,
+            IIngredientRepository ingredientRepository)
+            : base(recipeRepository)
         {
             this.ingredientRepository = ingredientRepository;
         }
@@ -39,7 +41,7 @@ namespace Business
                 throw new ArgumentNullException(nameof(ingredient));
             }
 
-            var dbIngredient = ingredient.IsTransient ? this.ingredientRepository.GetBy(e => e.Name == ingredient.Name).SingleOrDefault() : this.ingredientRepository.GetById(ingredient.Id);
+            var dbIngredient = ingredient.IsTransient ? this.ingredientRepository.GetByName(ingredient.Name) : this.ingredientRepository.GetById(ingredient.Id);
 
             if (dbIngredient == null)
             {
@@ -52,21 +54,31 @@ namespace Business
                 dbIngredient.Id = this.ingredientRepository.Save(ingredient);
             }
 
-            var dbRecipe = this.Repository.GetById(id);
-
+            var dbRecipe = this.Repository.GetById(id, r => r.RecipeIngredients);
             if (dbRecipe == null)
             {
                 throw new EntityNotFoundException(typeof(Recipe).Name, id);
             }
 
-            dbRecipe.Ingredients = new List<Ingredient>(dbRecipe.Ingredients.ToList()) { dbIngredient };
-            this.Repository.Update(dbRecipe);
+            if (dbRecipe.Ingredients.Any(s => s.Id == dbIngredient.Id))
+            {
+                throw new AlreadyExistingEntityException($"The recipe {dbRecipe.Name} already contains {dbIngredient.Name}.");
+            }
+
+            this.Repository.Join(dbRecipe.Id, dbIngredient.Id);
         }
+
+        /// <summary>
+        /// Retrieves the recipe with the defined id.
+        /// </summary>
+        /// <param name="id">The recipe identifier.</param>
+        /// <returns>Returns the recipe with the defined id.</returns>
+        public override Recipe Retrieve(int id) => this.Repository.GetWithIngredients(id);
 
         /// <summary>
         /// Retrieves the list of recipes.
         /// </summary>
         /// <returns>Returns the list of recipes.</returns>
-        public IEnumerable<Recipe> RetrieveList() => this.Repository.GetAll();
+        public IEnumerable<Recipe> RetrieveList() => this.Repository.GetAllWithIngredients();
     }
 }

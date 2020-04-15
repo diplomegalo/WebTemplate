@@ -12,12 +12,12 @@ namespace WebTemplate.Controllers
 
     using Business;
 
+    using Common.Exceptions;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
 
-    using Model.Exceptions;
-
-    using DtoModel = Model.DTO;
+    using DtoModel = Common.DTO;
     using WebModel = WebTemplate.Models;
 
     /// <summary>
@@ -92,9 +92,9 @@ namespace WebTemplate.Controllers
             }
 
             // TODO : catch and manage exception into configuration services.
-            catch (EntityNotFoundException)
+            catch (EntityNotFoundException e)
             {
-                return this.NotFound($"Unable to retrieve the recipe: {recipe.Name}");
+                return this.NotFound(e.Message);
             }
         }
     }

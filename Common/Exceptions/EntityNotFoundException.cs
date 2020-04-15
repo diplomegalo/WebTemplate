@@ -2,7 +2,7 @@
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
-namespace Model.Exceptions
+namespace Common.Exceptions
 {
     using System;
     using System.Linq;

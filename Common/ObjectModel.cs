@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace Model
+namespace Common
 {
     using System;
     using System.Collections.Generic;

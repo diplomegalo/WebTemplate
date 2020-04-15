@@ -13,7 +13,7 @@ namespace WebTemplate.Controllers
 
     using Microsoft.AspNetCore.Mvc;
 
-    using DtoModel = Model.DTO;
+    using DtoModel = Common.DTO;
     using WebModel = WebTemplate.Models;
 
     /// <summary>

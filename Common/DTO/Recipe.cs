@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace Model.DTO
+namespace Common.DTO
 {
     using System;
     using System.Collections.Generic;

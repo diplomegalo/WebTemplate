@@ -5,17 +5,18 @@
 namespace Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
 
-    using DataModel = Data.Entities;
-    using DtoModel = Model.DTO;
+    using Dto = Common.DTO;
+    using Entity = Data.Entities;
 
     /// <summary>
     /// This class defines the methods to manage storage of recipe model.
     /// </summary>
-    public class RecipeRepository : RepositoryBase<DataModel.Recipe, DtoModel.Recipe, int>, IRecipeRepository
+    public class RecipeRepository : Repository<Entity.Recipe, Dto.Recipe, int>, IRecipeRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeRepository"/> class.
@@ -25,6 +26,19 @@ namespace Data
         public RecipeRepository(DataContext dbContext, IMapper mapper)
             : base(dbContext, mapper)
         {
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<Dto.Recipe> GetAllWithIngredients() => this.GetAll(e => e.RecipeIngredients);
+
+        /// <inheritdoc/>
+        public Dto.Recipe GetWithIngredients(int id) => this.GetById(id, recipe => recipe.RecipeIngredients);
+
+        /// <inheritdoc/>
+        public void Join(int recipeId, int ingredientId)
+        {
+            this.DbContext.RecipeIngredients.Add(new Entity.RecipeIngredient() { RecipeId = recipeId, IngredientId = ingredientId });
+            this.DbContext.SaveChanges();
         }
     }
 }

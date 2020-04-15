@@ -25,19 +25,30 @@ namespace Data
             LoggerFactory.Create(builder => builder.AddConsole());
 
         /// <summary>
+        /// Gets or sets the join RecipeIngredients data.
+        /// </summary>
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+
+        /// <summary>
         /// Gets or sets the Vegetables data.
         /// </summary>
         public DbSet<Recipe> Recipes { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Ingredients data.
+        /// </summary>
+        public DbSet<Ingredient> Ingredients { get; set; }
+
         /// <inheritdoc />
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // TODO : find a way to use logger factory only when in dev.
             optionsBuilder
                 .UseLoggerFactory(ContextLoggerFactory)
                 .EnableSensitiveDataLogging()
                 .UseSqlite(
-                "Filename=../Data/web-template.sqlite",
-                options => options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                    "Filename=../Data/web-template.sqlite",
+                    options => options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -57,7 +68,7 @@ namespace Data
                 .HasKey(e => new { e.IngredientId, e.RecipeId });
 
             modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(e => e.Ingredient)
+                .HasOne(e => e.Recipe)
                 .WithMany(e => e.RecipeIngredients)
                 .HasForeignKey(e => e.RecipeId);
 

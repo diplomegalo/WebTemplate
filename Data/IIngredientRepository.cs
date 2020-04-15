@@ -7,13 +7,19 @@ namespace Data
     using System;
     using System.Linq;
 
-    using DataModel = Data.Entities;
-    using DtoModel = Model.DTO;
+    using Dto = Common.DTO;
+    using Entity = Data.Entities;
 
     /// <summary>
     /// This interface defines the ingredient repository.
     /// </summary>
-    public interface IIngredientRepository : IRepositoryBase<DataModel.Ingredient, DtoModel.Ingredient, int>
+    public interface IIngredientRepository : IRepository<Entity.Ingredient, Dto.Ingredient, int>
     {
+        /// <summary>
+        /// Gets ingredient by name.
+        /// </summary>
+        /// <param name="name">The name of the ingredient.</param>
+        /// <returns>Returns the ingredient with the define name.</returns>
+        public Dto.Ingredient GetByName(string name);
     }
 }

@@ -9,13 +9,13 @@ namespace Data
 
     using AutoMapper;
 
-    using DataModel = Data.Entities;
-    using DtoModel = Model.DTO;
+    using Dto = Common.DTO;
+    using Entity = Data.Entities;
 
     /// <summary>
     /// This class defines the ingredient repository.
     /// </summary>
-    public class IngredientRepository : RepositoryBase<DataModel.Ingredient, DtoModel.Ingredient, int>, IIngredientRepository
+    public class IngredientRepository : Repository<Entity.Ingredient, Dto.Ingredient, int>, IIngredientRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IngredientRepository"/> class.
@@ -26,5 +26,8 @@ namespace Data
             : base(dbContext, mapper)
         {
         }
+
+        /// <inheritdoc/>
+        public Dto.Ingredient GetByName(string name) => this.GetBy(e => e.Name == name).SingleOrDefault();
     }
 }

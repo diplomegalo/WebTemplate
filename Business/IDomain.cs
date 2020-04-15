@@ -1,4 +1,4 @@
-﻿// <copyright file="IDomainBase.cs" company="PlaceholderCompany">
+﻿// <copyright file="IDomain.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -7,15 +7,15 @@ namespace Business
     using System;
     using System.Linq;
 
-    using Model;
+    using Common;
 
     /// <summary>
     /// This interface defines the base domain methods.
     /// </summary>
-    /// <typeparam name="TEntity">The type of the entity manage by the domain.</typeparam>
-    /// <typeparam name="TKey">The type of the entity identifier.</typeparam>
-    public interface IDomainBase<TEntity, TKey>
-        where TEntity : ObjectModel<TEntity, TKey>
+    /// <typeparam name="TDto">The type of the object model manage by the domain.</typeparam>
+    /// <typeparam name="TKey">The type of the object model identifier.</typeparam>
+    public interface IDomain<TDto, in TKey>
+        where TDto : ObjectModel<TDto, TKey>
     {
         /// <summary>
         /// Registers the defines entity.
@@ -23,7 +23,7 @@ namespace Business
         /// <param name="entity">The entity to register.</param>
         /// <returns>Returns the new state of the entity.</returns>
         /// <remarks>If the entity already exists, it will be updated.</remarks>
-        TEntity Register(TEntity entity);
+        TDto Register(TDto entity);
 
         /// <summary>
         /// Removes the entity by the defined identifier.
@@ -36,6 +36,6 @@ namespace Business
         /// </summary>
         /// <param name="id">The entity identifier.</param>
         /// <returns>Returns the entity with the identifier defines by <paramref name="id"/>.</returns>
-        TEntity Retrieve(TKey id);
+        TDto Retrieve(TKey id);
     }
 }

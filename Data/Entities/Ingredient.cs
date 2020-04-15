@@ -8,7 +8,7 @@ namespace Data.Entities
     using System.Collections.Generic;
     using System.Linq;
 
-    using Model;
+    using Common;
 
     /// <summary>
     /// This class defines the ingredient data model.

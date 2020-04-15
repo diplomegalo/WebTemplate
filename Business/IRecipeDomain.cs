@@ -8,12 +8,12 @@ namespace Business
     using System.Collections.Generic;
     using System.Linq;
 
-    using Model.DTO;
+    using Common.DTO;
 
     /// <summary>
     /// This class defines the recipe domain methods.
     /// </summary>
-    public interface IRecipeDomain : IDomainBase<Recipe, int>
+    public interface IRecipeDomain : IDomain<Recipe, int>
     {
         /// <summary>
         /// Adds ingredient to recipe.

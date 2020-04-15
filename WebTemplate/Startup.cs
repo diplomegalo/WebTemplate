@@ -18,6 +18,10 @@ namespace WebTemplate
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    using Dto = Common.DTO;
+    using Entity = Data.Entities;
+    using Model = WebTemplate.Models;
+
     /// <summary>
     /// This class defines the startup methods.
     /// </summary>
@@ -60,7 +64,7 @@ namespace WebTemplate
             services.AddScoped<IRecipeDomain, RecipeDomain>();
 
             services.AddAutoMapper(
-                cfg => cfg.AddMaps(typeof(DataMapping), typeof(WebMapping)),
+                cfg => cfg.AddMaps(typeof(Mapping), typeof(WebMapping)),
                 typeof(Startup));
 
             // Controller

@@ -1,4 +1,4 @@
-﻿// <copyright file="DataMapping.cs" company="Delsoft">
+﻿// <copyright file="Mapping.cs" company="Delsoft">
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
@@ -9,18 +9,18 @@ namespace Data
 
     using AutoMapper;
 
-    using Dto = Model.DTO;
+    using Dto = Common.DTO;
     using Entity = Data.Entities;
 
     /// <summary>
     /// This class defines the model mapping.
     /// </summary>
-    public class DataMapping : Profile
+    public class Mapping : Profile
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataMapping"/> class.
+        /// Initializes a new instance of the <see cref="Mapping"/> class.
         /// </summary>
-        public DataMapping()
+        public Mapping()
         {
             this.CreateMap<Entity.Recipe, Dto.Recipe>()
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.RecipeIngredients.Select(s => s.Ingredient).ToList()))

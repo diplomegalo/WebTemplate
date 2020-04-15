@@ -9,7 +9,7 @@ namespace WebTemplate
 
     using AutoMapper;
 
-    using DtoModel = Model.DTO;
+    using DtoModel = Common.DTO;
     using WebModel = WebTemplate.Models;
 
     /// <summary>
