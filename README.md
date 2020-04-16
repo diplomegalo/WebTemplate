@@ -3,11 +3,11 @@ Template for SPA web project with standard options.
 
 Client
 ------
-Webpack
-Babel
-React (with hotloader)
-Typescript
-ESlint (airbnb)
+* Webpack
+* Babel
+* React (with hotloader)
+* Typescript
+* ESlint (airbnb)
 
 Controller
 ----------
@@ -17,3 +17,7 @@ Controller
 ORM
 ---
 EF core
+
+Libraries
+---------
+AutoMapper
