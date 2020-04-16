@@ -39,7 +39,19 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id">The recipe identifier.</param>
         /// <param name="ingredient">The ingredient to add to recipe.</param>
+        /// <returns>Returns the action result.</returns>
         [HttpPut]
-        public void Put(int id, Ingredient ingredient) => this.recipeDomain.AddIngredient(id, this.mapper.Map<DtoModel.Ingredient>(ingredient));
+        public IActionResult Put(int id, Ingredient ingredient)
+        {
+            try
+            {
+                this.recipeDomain.AddIngredient(id, this.mapper.Map<DtoModel.Ingredient>(ingredient));
+                return this.Ok();
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(e.Message);
+            }
+        }
     }
 }

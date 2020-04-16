@@ -7,7 +7,7 @@ namespace Common.Exceptions
     using System;
     using System.Linq;
 
-    public class AlreadyExistingEntityException : Exception
+    public class AlreadyExistingEntityException : ApplicationException
     {
         public AlreadyExistingEntityException(string message)
             : base(message)

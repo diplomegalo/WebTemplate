@@ -10,7 +10,6 @@ namespace Data.Entities
     using AutoMapper;
 
     using Dto = Common.DTO;
-    using Entity = Data.Entities;
 
     /// <summary>
     /// This class defines the model mapping.
@@ -22,11 +21,11 @@ namespace Data.Entities
         /// </summary>
         public Mapping()
         {
-            this.CreateMap<Entity.Recipe, Dto.Recipe>()
+            this.CreateMap<Recipe, Dto.Recipe>()
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.RecipeIngredients.Select(s => s.Ingredient).ToList()))
                 .ReverseMap();
 
-            this.CreateMap<Dto.Recipe, Entity.Recipe>()
+            this.CreateMap<Dto.Recipe, Recipe>()
                 .ForMember(dest => dest.RecipeIngredients, opt => opt.MapFrom(src => src.Ingredients))
                 .AfterMap((dto, entity) =>
                 {
@@ -37,13 +36,13 @@ namespace Data.Entities
                     }
                 });
 
-            this.CreateMap<Dto.Ingredient, Entity.RecipeIngredient>()
+            this.CreateMap<Dto.Ingredient, RecipeIngredient>()
                 .ForMember(dest => dest.IngredientId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Ingredient, opt => opt.MapFrom(src => src));
 
-            this.CreateMap<Dto.Ingredient, Entity.Ingredient>();
+            this.CreateMap<Dto.Ingredient, Ingredient>();
 
-            this.CreateMap<Entity.Ingredient, Dto.Ingredient>()
+            this.CreateMap<Ingredient, Dto.Ingredient>()
                 .ForMember(dest => dest.Recipes, opt => opt.MapFrom(src => src.RecipeIngredients.Select(s => s.Recipe).ToList()))
                 .ReverseMap();
         }

@@ -15,7 +15,6 @@ namespace Web.Controllers.V1
     /// This controller defines operation for the <see cref="WebModel.Recipe" /> model.
     /// </summary>
     [ApiController]
-    [ApiVersion("1.0")]
     [Route("api/[controller]")]
     public class RecipeController : ControllerBase
     {
@@ -32,7 +31,7 @@ namespace Web.Controllers.V1
             this.recipeDomain = recipeDomain;
             this.mapper = mapper;
         }
-        
+
         /// <summary>
         /// Gets the recipes by the defines identifier.
         /// </summary>

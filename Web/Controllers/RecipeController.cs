@@ -26,7 +26,6 @@ namespace Web.Controllers
     /// This controller defines operation for the <see cref="Recipe" /> model.
     /// </summary>
     [ApiController]
-    [ApiVersion("2.0")]
     [Route("api/[controller]")]
     public class RecipeController : ControllerBase
     {
