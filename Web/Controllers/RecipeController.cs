@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace WebTemplate.Controllers
+namespace Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -17,13 +17,16 @@ namespace WebTemplate.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
 
+    using Web.Models;
+
     using DtoModel = Common.DTO;
-    using WebModel = WebTemplate.Models;
+    using WebModel = Web.Models;
 
     /// <summary>
-    /// This controller defines operation for the <see cref="WebModel.Recipe" /> model.
+    /// This controller defines operation for the <see cref="Recipe" /> model.
     /// </summary>
     [ApiController]
+    [ApiVersion("2.0")]
     [Route("api/[controller]")]
     public class RecipeController : ControllerBase
     {
@@ -69,7 +72,7 @@ namespace WebTemplate.Controllers
         /// </summary>
         /// <returns>Returns the list of all recipes.</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<WebModel.Recipe>> Get() => this.Ok(this.mapper.Map<IEnumerable<WebModel.Recipe>>(this.recipeDomain.RetrieveList()));
+        public ActionResult<IEnumerable<Recipe>> Get() => this.Ok(this.mapper.Map<IEnumerable<Recipe>>(this.recipeDomain.RetrieveList()));
 
         /// <summary>
         /// Gets the recipes by the defines identifier.
@@ -77,7 +80,7 @@ namespace WebTemplate.Controllers
         /// <param name="id">The identifier.</param>
         /// <returns>Returns the recipe with <paramref name="id"/> as identifier.</returns>
         [HttpGet("{id}")]
-        public ActionResult<WebModel.Recipe> Get(int id)
+        public ActionResult<Recipe> Get(int id)
         {
             var result = this.recipeDomain.Retrieve(id);
             if (result == null)
@@ -85,7 +88,7 @@ namespace WebTemplate.Controllers
                 return this.NotFound($"Unable to retrieve the recipe with identifier: {id}.");
             }
 
-            return this.mapper.Map<WebModel.Recipe>(result);
+            return this.mapper.Map<Recipe>(result);
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace WebTemplate.Controllers
         /// <param name="recipe">The recipes to save.</param>
         /// <returns>Returns the identifier.</returns>
         [HttpPost]
-        public ActionResult<WebModel.Recipe> Post(WebModel.Recipe recipe) =>
+        public ActionResult<Recipe> Post(Recipe recipe) =>
             this.Created(
                 this.linkGenerator.GetPathByAction("Get", "Recipe", new { id = recipe.Id }),
                 this.recipeDomain.Register(this.mapper.Map<DtoModel.Recipe>(recipe)));
@@ -105,11 +108,11 @@ namespace WebTemplate.Controllers
         /// <param name="recipe">The recipe updated state.</param>
         /// <returns>Returns the new state of the recipe.</returns>
         [HttpPut]
-        public ActionResult<WebModel.Recipe> Put(WebModel.Recipe recipe)
+        public ActionResult<Recipe> Put(Recipe recipe)
         {
             try
             {
-                return this.mapper.Map<WebModel.Recipe>(
+                return this.mapper.Map<Recipe>(
                     this.recipeDomain.Register(this.mapper.Map<DtoModel.Recipe>(recipe)));
             }
 

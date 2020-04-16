@@ -1,18 +1,24 @@
-﻿// <copyright file="Ingredient.cs" company="Delsoft">
-//  Copyright (c) Delsoft. All rights reserved.
-//  </copyright>
+﻿// <copyright file="Recipe.cs" company="Delsoft">
+// Copyright (c) Delsoft. All rights reserved.
+// </copyright>
 
-namespace WebTemplate.Models
+namespace Web.Models.V1
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     /// <summary>
-    /// This class defines the ingredient model.
+    /// This class defines the <see cref="Recipe" />.
     /// </summary>
-    public class Ingredient
+    public class Recipe
     {
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        [StringLength(160)]
+        public string Description { get; set; }
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>

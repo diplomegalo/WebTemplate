@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace WebTemplate
+namespace Web
 {
     using System;
     using System.Linq;

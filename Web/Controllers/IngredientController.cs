@@ -2,19 +2,16 @@
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
-namespace WebTemplate.Controllers
+namespace Web.Controllers
 {
     using System;
     using System.Linq;
-
     using AutoMapper;
-
     using Business;
-
     using Microsoft.AspNetCore.Mvc;
-
+    using Web.Models;
     using DtoModel = Common.DTO;
-    using WebModel = WebTemplate.Models;
+    using WebModel = Web.Models;
 
     /// <summary>
     /// This controller manage the ingredient entity.
@@ -43,6 +40,6 @@ namespace WebTemplate.Controllers
         /// <param name="id">The recipe identifier.</param>
         /// <param name="ingredient">The ingredient to add to recipe.</param>
         [HttpPut]
-        public void Put(int id, WebModel.Ingredient ingredient) => this.recipeDomain.AddIngredient(id, this.mapper.Map<DtoModel.Ingredient>(ingredient));
+        public void Put(int id, Ingredient ingredient) => this.recipeDomain.AddIngredient(id, this.mapper.Map<DtoModel.Ingredient>(ingredient));
     }
 }

@@ -2,7 +2,7 @@
 //  Copyright (c) Delsoft. All rights reserved.
 //  </copyright>
 
-namespace Data
+namespace Data.Entities
 {
     using System;
     using System.Linq;

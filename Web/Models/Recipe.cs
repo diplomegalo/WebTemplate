@@ -2,7 +2,7 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace WebTemplate.Models
+namespace Web.Models
 {
     using System;
     using System.Collections.Generic;

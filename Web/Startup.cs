@@ -2,25 +2,23 @@
 // Copyright (c) Delsoft. All rights reserved.
 // </copyright>
 
-namespace WebTemplate
+namespace Web
 {
     using System;
     using System.Linq;
-
     using AutoMapper;
-
     using Business;
-
     using Data;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Versioning;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-
     using Dto = Common.DTO;
     using Entity = Data.Entities;
-    using Model = WebTemplate.Models;
+    using Model = Web.Models;
+    using ModelV1 = Web.Models.V1;
 
     /// <summary>
     /// This class defines the startup methods.
@@ -62,14 +60,28 @@ namespace WebTemplate
 
             // Business
             services.AddScoped<IRecipeDomain, RecipeDomain>();
+            services.AddScoped<Business.V1.IRecipeDomain, Business.V1.RecipeDomain>();
 
             services.AddAutoMapper(
-                cfg => cfg.AddMaps(typeof(Mapping), typeof(WebMapping)),
+                cfg => cfg.AddMaps(
+                    typeof(Entity.Mapping), 
+                    typeof(Model.Mapping), 
+                    typeof(ModelV1.Mapping)), 
                 typeof(Startup));
 
             // Controller
             services.AddControllers();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "app/dist/");
+
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = ApiVersion.Parse("2.0");
+                opt.ApiVersionReader = ApiVersionReader.Combine(
+                    new QueryStringApiVersionReader("v"),
+                    new HeaderApiVersionReader("X-Version"));
+            });
         }
     }
 }
