@@ -1,0 +1,16 @@
+﻿{
+  "rules": [
+    {
+      "id": 1,
+      "name": "Recette unique",
+      "description": "Le nom de la recette doit être unique",
+      "type": "Business"
+    },
+    {
+      "id": 2,
+      "name": "La recette doit être valide",
+      "description": "Les champs inhérent à la recette sont valides",
+      "type": "Validation"
+    }
+  ]
+}
