@@ -15,7 +15,7 @@ const baseConfig = {
     module: {
         rules: [
             {
-                test: /\.(j|t)s(x)?$/,
+                test: /\.[jt]s(x)?$/,
                 exclude: /node_modules/,
                 loader: "babel-loader",
             },
@@ -47,7 +47,6 @@ const baseConfig = {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
         alias: {
             components: path.resolve(__dirname, "src/components"),
-            containers: path.resolve(__dirname, "src/containers"),
         },
     },
 };
@@ -58,6 +57,7 @@ const devConfig = {
         contentBase: "./dist",
         hot: true,
         overlay: true,
+        historyApiFallback: true,
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin({ eslint: true }),

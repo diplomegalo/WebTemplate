@@ -32,6 +32,8 @@ module.exports = {
         '@typescript-eslint',
     ],
     rules: {
+        'react/jsx-indent-props': [2, 'first'],
+        'react/jsx-indent': [2, 4],
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'warn',
         // allow jsx code in .tsx and .jsx files
@@ -55,8 +57,7 @@ module.exports = {
             webpack: {config: 'webpack.config.js'}, 
             // set alias for eslint
             alias: [ 
-                ['components', './src/components'],
-                ['containers', './src/containers']
+                ['components', './src/components']
             ],
         }
     },
