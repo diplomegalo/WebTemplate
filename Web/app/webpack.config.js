@@ -29,6 +29,10 @@ const baseConfig = {
                 test: /\.html/,
                 loader: "html-loader",
             },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
         ],
     },
     output: {
@@ -44,7 +48,7 @@ const baseConfig = {
         }),
     ],
     resolve: {
-        extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".json", "css"],
         alias: {
             components: path.resolve(__dirname, "src/components"),
         },
