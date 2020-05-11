@@ -5,8 +5,6 @@ import Col from "react-bootstrap/esm/Col";
 import DatePicker from "react-datepicker";
 import Row from "react-bootstrap/esm/Row";
 
-import "react-datepicker/dist/react-datepicker.css";
-
 interface IVegetable {
     name: string;
     season: "Winter" | "Fall" | "Summer" | "Spring";

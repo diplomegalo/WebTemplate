@@ -30,7 +30,7 @@ const baseConfig = {
                 loader: "html-loader",
             },
             {
-                test: /\.css$/,
+                test: /\.css/,
                 use: ["style-loader", "css-loader"],
             },
         ],
