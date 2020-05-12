@@ -3,6 +3,7 @@ const merge = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -31,7 +32,7 @@ const baseConfig = {
             },
             {
                 test: /\.css/,
-                use: ["style-loader", "css-loader"],
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
         ],
     },
@@ -42,6 +43,10 @@ const baseConfig = {
     plugins: [
         new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].[hash].css",
+            chunkFilename: "[id].css",
+        }),
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "./src/index.html",
