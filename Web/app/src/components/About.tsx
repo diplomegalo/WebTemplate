@@ -1,8 +1,3 @@
 import React from "react";
 
-export default () => (
-    <>
-        <a href="/">Home</a>
-        <h1>About.</h1>
-    </>
-);
+export default () => <h2>About</h2>;

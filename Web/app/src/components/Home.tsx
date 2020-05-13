@@ -1,9 +1,11 @@
 import React from "react";
+import Jumbotron from "react-bootstrap/esm/Jumbotron";
 
 export default () => (
-    <>
-        <h1>Hello World!!</h1>
-        <p><a href="/about">About</a></p>
-        <p><a href="/add-ingredient">Add Ingredient</a></p>
-    </>
+    <Jumbotron>
+        <h1>Delsaut Pierre-Arnaud</h1>
+        <p>
+            Developpeur, DJ, amoureux du bien boire et bien manger !
+        </p>
+    </Jumbotron>
 );

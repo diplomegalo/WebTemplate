@@ -11,7 +11,7 @@ interface IVegetable {
     endDate: Date;
 }
 
-const Vegetable = () =>
+const AddVegetable = () =>
 {
     const dateFormat = "dd/MM/yyyy";
 
@@ -39,49 +39,57 @@ const Vegetable = () =>
             <h2>Ajouter un nouveau légume</h2>
             <Form>
                 <Form.Group>
-                    <Form.Label>Nom :</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ex : Tomate"
-                        name="name"
-                        value={vegetable.name}
-                        onChange={handleChange}
-                    />
+                    <Form.Label>
+                        Nom :
+                        <Form.Control
+                            type="text"
+                            placeholder="Ex : Tomate"
+                            name="name"
+                            value={vegetable.name}
+                            onChange={handleChange}
+                        />
+                    </Form.Label>
                 </Form.Group>
                 <Form.Row>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Date de début :</Form.Label>
-                            <DatePicker
-                                className="form-control"
-                                dateFormat={dateFormat}
-                                name="startDate"
-                                selected={vegetable.startDate}
-                                onChange={(date) => handleDate(date, "startDate")}
-                            />
+                            <Form.Label>
+                                Date de début :
+                                <DatePicker
+                                    className="form-control"
+                                    dateFormat={dateFormat}
+                                    name="startDate"
+                                    selected={vegetable.startDate}
+                                    onChange={(date) => handleDate(date, "startDate")}
+                                />
+                            </Form.Label>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Date de fin : </Form.Label>
-                            <DatePicker
-                                className="form-control"
-                                dateFormat={dateFormat}
-                                name="endDate"
-                                selected={vegetable.endDate}
-                                onChange={(date) => handleDate(date, "endDate")}
-                            />
+                            <Form.Label>
+                                Date de fin :
+                                <DatePicker
+                                    className="form-control"
+                                    dateFormat={dateFormat}
+                                    name="endDate"
+                                    selected={vegetable.endDate}
+                                    onChange={(date) => handleDate(date, "endDate")}
+                                />
+                            </Form.Label>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Saison :</Form.Label>
-                            <Form.Control as="select" custom>
-                                <option>Eté</option>
-                                <option>Automne</option>
-                                <option>Hiver</option>
-                                <option>Printemps</option>
-                            </Form.Control>
+                            <Form.Label>
+                                Saison :
+                                <Form.Control as="select" custom>
+                                    <option>Eté</option>
+                                    <option>Automne</option>
+                                    <option>Hiver</option>
+                                    <option>Printemps</option>
+                                </Form.Control>
+                            </Form.Label>
                         </Form.Group>
                     </Col>
                 </Form.Row>
@@ -92,4 +100,4 @@ const Vegetable = () =>
     );
 };
 
-export default Vegetable;
+export default AddVegetable;

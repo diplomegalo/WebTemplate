@@ -1,25 +1,46 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import { hot } from "react-hot-loader/root";
-import AddVegetable from "components/AddVegetable";
-import Home from "components/Home";
+import Nav from "react-bootstrap/esm/Nav";
+import {
+    BrowserRouter,
+    Link,
+    Switch,
+    Route,
+} from "react-router-dom";
+import Home from "./Home";
+import AddVegetable from "./AddVegetable";
 import About from "./About";
 
-const getComponent = (pathname: string) =>
-{
-    if (pathname === "/add-ingredient")
-    {
-        return <AddVegetable />;
-    }
+const App = () => (
+    <Container>
+        <BrowserRouter>
+            <Nav>
+                <Nav.Item>
+                    <Link className="nav-link" to="/">Home</Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Link className="nav-link" to="/add-vegetable">Ajouter un ingredient</Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Link className="nav-link" to="/about">About</Link>
+                </Nav.Item>
+            </Nav>
 
-    if (pathname === "/about")
-    {
-        return <About />;
-    }
+            <Switch>
+                <Route path="/add-vegetable">
+                    <AddVegetable />
+                </Route>
+                <Route path="/about">
+                    <About />
+                </Route>
+                <Route path="/">
+                    <Home />
+                </Route>
+            </Switch>
+        </BrowserRouter>
 
-    return <Home />;
-};
-
-const App = () => (<Container>{getComponent(window.location.pathname)}</Container>);
+    </Container>
+);
 
 export default hot(App);

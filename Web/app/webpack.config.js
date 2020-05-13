@@ -66,7 +66,6 @@ const devConfig = {
         contentBase: "./dist",
         hot: true,
         overlay: true,
-        historyApiFallback: true,
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin({ eslint: true }),
