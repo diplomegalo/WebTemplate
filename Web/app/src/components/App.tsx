@@ -1,46 +1,38 @@
 import React from "react";
-import Container from "react-bootstrap/esm/Container";
 import { hot } from "react-hot-loader/root";
 import Nav from "react-bootstrap/esm/Nav";
 import {
-    BrowserRouter,
-    Link,
     Switch,
     Route,
+    NavLink,
 } from "react-router-dom";
+import Vegetable from "components/Vegetable";
 import Home from "./Home";
-import AddVegetable from "./AddVegetable";
 import About from "./About";
+import NotFound from "./NotFound";
 
 const App = () => (
-    <Container>
-        <BrowserRouter>
-            <Nav>
-                <Nav.Item>
-                    <Link className="nav-link" to="/">Home</Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Link className="nav-link" to="/add-vegetable">Ajouter un ingredient</Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Link className="nav-link" to="/about">About</Link>
-                </Nav.Item>
-            </Nav>
+    <>
+        <Nav>
+            <Nav.Item>
+                <NavLink className="nav-link" activeClassName="active" exact to="/">Home</NavLink>
+            </Nav.Item>
+            <Nav.Item>
+                <NavLink className="nav-link" activeClassName="active" to="vegetable">Vegetable</NavLink>
+            </Nav.Item>
+            <Nav.Item>
+                <NavLink className="nav-link" activeClassName="active" to="about">About</NavLink>
+            </Nav.Item>
+        </Nav>
 
-            <Switch>
-                <Route path="/add-vegetable">
-                    <AddVegetable />
-                </Route>
-                <Route path="/about">
-                    <About />
-                </Route>
-                <Route path="/">
-                    <Home />
-                </Route>
-            </Switch>
-        </BrowserRouter>
-
-    </Container>
+        <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/home" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/vegetable" component={Vegetable} />
+            <Route component={NotFound} />
+        </Switch>
+    </>
 );
 
 export default hot(App);

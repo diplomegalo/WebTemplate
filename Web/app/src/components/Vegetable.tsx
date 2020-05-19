@@ -11,7 +11,7 @@ interface IVegetable {
     endDate: Date;
 }
 
-const AddVegetable = () =>
+const Vegetable = () =>
 {
     const dateFormat = "dd/MM/yyyy";
 
@@ -100,4 +100,4 @@ const AddVegetable = () =>
     );
 };
 
-export default AddVegetable;
+export default Vegetable;
