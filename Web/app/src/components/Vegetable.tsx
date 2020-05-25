@@ -3,28 +3,35 @@ import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import DatePicker from "react-datepicker";
+import { Link, useParams } from "react-router-dom";
 
 interface IVegetable {
-    name?: string;
+    name: string;
     season: "Winter" | "Fall" | "Summer" | "Spring";
     startDate: Date;
     endDate: Date;
 }
 
+interface IVegetableRoute
+{
+    slug: string;
+}
+
 const Vegetable = () =>
 {
     const dateFormat = "dd/MM/yyyy";
+    const { slug } = useParams<IVegetableRoute>();
 
     const [vegetable, setVegetable] = React.useState<IVegetable>({
         endDate: new Date(),
-        name: "",
+        name: slug ?? "",
         season: "Fall",
         startDate: new Date(),
     });
 
-    const handleDate = (date: Date | null, name: "startDate" | "endDate") =>
+    const handleDate = (date: Date | null, typeDate: "startDate" | "endDate") =>
     {
-        setVegetable((prevState: IVegetable) => ({ ...prevState, [name]: date }));
+        setVegetable((prevState: IVegetable) => ({ ...prevState, [typeDate]: date }));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -36,7 +43,15 @@ const Vegetable = () =>
 
     return (
         <>
-            <h2>Ajouter un nouveau légume</h2>
+            <h2>{vegetable.name === "" ? "Ajouter un nouveau légume" : vegetable.name }</h2>
+            <div>
+                <p>
+                    <Link to="/vegetable/concombre">Concombre</Link>
+                </p>
+                <p>
+                    <Link to="/vegetable/tomate">Tomate</Link>
+                </p>
+            </div>
             <Form>
                 <Form.Group>
                     <Form.Label>

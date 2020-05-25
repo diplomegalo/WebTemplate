@@ -30,6 +30,7 @@ const App = () => (
             <Route path="/home" exact component={Home} />
             <Route path="/about" component={About} />
             <Route path="/vegetable" component={Vegetable} />
+            <Route path="/vegetable/:slug" component={Vegetable} />
             <Route component={NotFound} />
         </Switch>
     </>
