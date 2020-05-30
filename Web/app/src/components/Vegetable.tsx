@@ -20,11 +20,11 @@ interface IVegetableRoute
 const Vegetable = () =>
 {
     const dateFormat = "dd/MM/yyyy";
-    const { slug } = useParams<IVegetableRoute>();
+    const { name } = useParams();
 
     const [vegetable, setVegetable] = React.useState<IVegetable>({
         endDate: new Date(),
-        name: slug ?? "",
+        name: "",
         season: "Fall",
         startDate: new Date(),
     });
@@ -43,7 +43,8 @@ const Vegetable = () =>
 
     return (
         <>
-            <h2>{vegetable.name === "" ? "Ajouter un nouveau légume" : vegetable.name }</h2>
+            <h2>{name ?? "Ajouter un Légume"}</h2>
+            {}
             <div>
                 <p>
                     <Link to="/vegetable/concombre">Concombre</Link>
