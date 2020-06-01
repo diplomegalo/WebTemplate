@@ -11,13 +11,38 @@ const Appellation = () =>
         type: null,
     });
 
-    // eslint-disable-next-line max-len
-    const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => setAppellation((value) => ({
-        ...value,
-        [target.name]: target.value,
-    }));
+    const [isValid, setIsValid] = useState<boolean>(false);
 
-    return <AppellationForm appellation={appellation} handleChange={handleChange} />;
+    const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    {
+        setAppellation((value) => ({ ...value, [target.name]: target.value }));
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+    {
+        const { form } = e.currentTarget;
+        if (form.checkValidity() === false)
+        {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else
+        {
+            setIsValid(true);
+        }
+    };
+
+    return (
+        <>
+            <h2>Gestion des Appellations</h2>
+            <AppellationForm
+                appellation={appellation}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                isValid={isValid}
+            />
+        </>
+    );
 };
 
 export default Appellation;

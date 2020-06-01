@@ -47,16 +47,18 @@ module.exports = {
         'linebreak-style': ["error", 'windows'],
         'indent': ["error", 4],
         'quotes': ["error", 'double'],
-        'brace-style': ['error', 'allman']
+        'brace-style': ['error', 'allman'],
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-expressions': ['error'],
     },
     settings: {
         'import/resolver': {
             // prevent error in webpack.config.js
             node: {},
             // get config to resolve import from webpack.config.js
-            webpack: {config: 'webpack.config.js'}, 
+            webpack: {config: 'webpack.config.js'},
             // set alias for eslint
-            alias: [ 
+            alias: [
                 ['components', './src/components']
             ],
         }
