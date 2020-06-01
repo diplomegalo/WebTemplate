@@ -56,6 +56,8 @@ const baseConfig = {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json", "css"],
         alias: {
             components: path.resolve(__dirname, "src/components"),
+            containers: path.resolve(__dirname, "src/containers"),
+            models: path.resolve(__dirname, "src/models"),
         },
     },
 };

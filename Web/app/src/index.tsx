@@ -9,7 +9,6 @@ import App from "components/App";
 require("react-datepicker/dist/react-datepicker.css");
 require("./styles/app.css");
 
-
 ReactDOM.render(
     <Container>
         <App />

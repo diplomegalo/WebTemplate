@@ -8,7 +8,7 @@ import {
     NavLink,
 } from "react-router-dom";
 import Vegetable from "components/Vegetable";
-import Appellation from "components/Appellation";
+import Appellation from "containers/Appellation";
 import Home from "./Home";
 import About from "./About";
 import NotFound from "./NotFound";
