@@ -1,4 +1,4 @@
-export interface IAppellation
+export default interface IAppellation
 {
     id: number | null;
     name: string;

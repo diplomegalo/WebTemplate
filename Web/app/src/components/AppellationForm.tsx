@@ -1,61 +1,60 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
-import { IAppellation } from "models/IAppellation";
+import IAppellation from "models/IAppellation";
+import InputText from "components/InputText";
+import WineApi from "servicesApi/WineApi";
 
 export interface IAppellationProps
 {
     appellation: IAppellation;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    isValid: boolean;
 }
 
-export const AppellationForm = (props: IAppellationProps) =>
+const AppellationForm = (props: IAppellationProps) =>
 {
     const {
         appellation,
         handleChange,
-        handleSubmit,
-        isValid,
     } = props;
 
+    const [isValid, setIsValid] = useState<boolean>(false);
+    const [registered, setRegistered] = useState<boolean>(false);
+    const [submit, setSubmit] = useState<boolean>(false);
+    const formEl = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+    {
+        setSubmit(true);
+
+        e.preventDefault();
+        e.stopPropagation();
+        if (formEl == null || formEl.current == null || !formEl.current.checkValidity())
+        {
+            setSubmit(false);
+        }
+        else
+        {
+            setIsValid(true);
+            WineApi.registerAppellation(appellation)
+                .then((result: IAppellation) => setRegistered(true))
+                .catch(() => setSubmit(false));
+        }
+    };
+
     return (
-        <Form validated={isValid} onSubmit={handleSubmit}>
-            <Input
+        <Form validated={isValid} onSubmit={handleSubmit} ref={formEl}>
+            <InputText
+                label="Appellation:"
                 placeholder="Ex: Bordeaux"
                 value={appellation.name}
                 onChange={handleChange}
                 name="name"
                 error="Le nom de l'appellation est requise."
             />
-            <Button type="submit">Ajouter</Button>
+            <Button type="submit" disabled={submit || registered}>Ajouter</Button>
         </Form>
     );
 };
 
-// eslint-disable-next-line max-len
-const Input = (props: { placeholder: string; value: string; name: string; onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, error: string }) =>
-{
-    const {
-        placeholder,
-        value,
-        name,
-        onChange,
-        error,
-    } = props;
-    return (
-        <Form.Group>
-            <Form.Label>Appellation:</Form.Label>
-            <Form.Control
-                required
-                type="text"
-                placeholder={placeholder}
-                value={value}
-                name={name}
-                onChange={onChange}
-            />
-            <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-        </Form.Group>
-    );
-};
+export default AppellationForm;
