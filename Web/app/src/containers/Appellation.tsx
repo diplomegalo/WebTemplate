@@ -18,7 +18,7 @@ const Appellation = () =>
 
     return (
         <>
-            <h2>Gestion des Appellations</h2>
+            <h2>Gestion des Appellations PLop</h2>
             <AppellationForm
                 appellation={appellation}
                 handleChange={handleChange}

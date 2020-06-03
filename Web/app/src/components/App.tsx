@@ -1,5 +1,4 @@
 import React from "react";
-import { hot } from "react-hot-loader/root";
 import Nav from "react-bootstrap/esm/Nav";
 import {
     BrowserRouter as Router,
@@ -41,4 +40,4 @@ const App = () => (
     </Router>
 );
 
-export default hot(App);
+export default App;

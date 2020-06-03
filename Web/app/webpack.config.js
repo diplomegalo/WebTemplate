@@ -8,11 +8,7 @@ const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const baseConfig = {
-    entry: [
-        "react-hot-loader/patch",
-        path.resolve(__dirname, "src/index.tsx")],
-    externals: {
-    },
+    entry: [path.resolve(__dirname, "src/index.tsx")],
     module: {
         rules: [
             {
@@ -74,12 +70,31 @@ const devConfig = {
     plugins: [
         new ForkTsCheckerWebpackPlugin({ eslint: true }),
     ],
+    resolve: {
+        alias: {
+            "react-dom": "@hot-loader/react-dom",
+        },
+    },
 };
 
 const prodConfig = {
     optimization: {
         minimize: true,
         minimizer: [new TerserPlugin()],
+    },
+    externals: {
+        react: {
+            root: "React",
+            commonjs2: "react",
+            commonjs: "react",
+            amd: "react",
+        },
+        "react-dom": {
+            root: "ReactDOM",
+            commonjs2: "react-dom",
+            commonjs: "react-dom",
+            amd: "react-dom",
+        },
     },
 };
 
