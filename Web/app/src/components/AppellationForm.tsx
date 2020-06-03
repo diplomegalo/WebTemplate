@@ -37,13 +37,17 @@ const AppellationForm = (props: IAppellationProps) =>
         {
             setIsValid(true);
             WineApi.registerAppellation(appellation)
-                .then((result: IAppellation) => setRegistered(true))
+                .then((result: IAppellation) =>
+                {
+                    // TODO : use redux to reset the form after a successful registering.
+                    setRegistered(true);
+                })
                 .catch(() => setSubmit(false));
         }
     };
 
     return (
-        <Form validated={isValid} onSubmit={handleSubmit} ref={formEl}>
+        <Form validated={isValid} onSubmit={handleSubmit} ref={formEl} id="registerAppellation">
             <InputText
                 label="Appellation:"
                 placeholder="Ex: Bordeaux"
