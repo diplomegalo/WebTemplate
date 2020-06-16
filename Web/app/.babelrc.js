@@ -11,7 +11,7 @@
             useBuiltIns: 'usage',
             corejs: 3,
             targets: {
-                browsers: ['cover 90%']
+                browsers: ['cover 5%']
             },
         }],
         '@babel/typescript',

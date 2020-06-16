@@ -3,7 +3,7 @@ import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import IAppellation from "models/IAppellation";
 import InputText from "components/InputText";
-import WineApi from "servicesApi/WineApi";
+import WineServiceApi from "servicesApi/WineServiceApi";
 
 export interface IAppellationProps
 {
@@ -36,7 +36,7 @@ const AppellationForm = (props: IAppellationProps) =>
         else
         {
             setIsValid(true);
-            WineApi.registerAppellation(appellation)
+            WineServiceApi.registerAppellation(appellation)
                 .then((result: IAppellation) =>
                 {
                     // TODO : use redux to reset the form after a successful registering.
