@@ -25,7 +25,6 @@ const InputText = (props: IInputTextProps) =>
         <Form.Group>
             <Form.Label>{label}</Form.Label>
             <Form.Control
-                required
                 type="text"
                 placeholder={placeholder}
                 value={value}

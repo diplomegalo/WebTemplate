@@ -49,7 +49,7 @@ const AppellationForm = (props: IAppellationProps) =>
     return (
         <Form validated={isValid} onSubmit={handleSubmit} ref={formEl} id="registerAppellation">
             <InputText
-                label="Appellation:"
+                label="Nom de l'appellation:"
                 placeholder="Ex: Bordeaux"
                 value={appellation.name}
                 onChange={handleChange}

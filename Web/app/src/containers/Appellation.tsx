@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IAppellation from "models/IAppellation";
 import AppellationForm from "components/AppellationForm";
 import AppellationList from "components/AppellationList";
-import WineServiceApi from "../servicesApi/WineServiceApi";
+import WineServiceApi from "servicesApi/WineServiceApi";
 
 const Appellation = () =>
 {
@@ -15,8 +15,12 @@ const Appellation = () =>
         type: null,
     });
 
-    WineServiceApi.listAllAppellation()
-        .then((result: IAppellation[]) => setAppellationList(Array.from(result)));
+    // Init list of appellations.
+    useEffect(() =>
+    {
+        WineServiceApi.listAllAppellation()
+            .then((result: IAppellation[]) => setAppellationList(result));
+    }, []);
 
     const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     {
@@ -28,13 +32,11 @@ const Appellation = () =>
             <h2>Gestion des Appellations</h2>
             <h3>Liste des opérations:</h3>
             <AppellationList appellationList={appellationList} />
-            <div>
-                <h3>Ajouter une appellation:</h3>
-                <AppellationForm
-                    appellation={appellation}
-                    handleChange={handleChange}
-                />
-            </div>
+            <h3>Ajouter une appellation:</h3>
+            <AppellationForm
+                appellation={appellation}
+                handleChange={handleChange}
+            />
         </>
     );
 };

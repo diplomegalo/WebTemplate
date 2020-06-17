@@ -1,5 +1,22 @@
-﻿{
+{
   "appellations": [
-    { "id": 1, "name": "Alsace Grand Cru", "vineyard": "Alsace", "type": "AOC - AOP" }
+    {
+      "id": 1,
+      "name": "Alsace Grand Cru",
+      "vineyard": "Alsace",
+      "type": "AOC - AOP"
+    },
+    {
+      "name": "test",
+      "description": "",
+      "type": null,
+      "id": 2
+    },
+    {
+      "name": "Test2",
+      "description": "",
+      "type": null,
+      "id": 3
+    }
   ]
 }

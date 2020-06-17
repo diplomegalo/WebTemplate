@@ -10,7 +10,7 @@ export default class WineServiceApi
 
     static registerAppellation(appellation: IAppellation): Promise<IAppellation>
     {
-        return axios.post("appelations", appellation, this.config)
+        return axios.post("appellations", appellation, this.config)
             .then((result: AxiosResponse) => result.data);
     }
 
