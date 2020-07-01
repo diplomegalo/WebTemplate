@@ -4,19 +4,8 @@
       "id": 1,
       "name": "Alsace Grand Cru",
       "vineyard": "Alsace",
+      "description": "L'Alsace grand cru est une appellation viticole dont les vins sont produits dans le vignoble d'Alsace, vignoble du nord-est de la France et plus précisément dans les régions viticoles du Bas-rhin et du Haut-rhin. Son vignoble bénéficie d'un climat tempéré-continental et d'un terroir fait de sols calcaires, granites, schistes, gneiss et grès. L'Alsace grand cru possède le label français AOC (Appellation d'Origine Contrôlée) ainsi que le label européen AOP (Appellation d'Origine Protégée). Ci-dessous vous trouverez les caractéristiques, le cahier des charges et la liste des vins de cette appellation \"Alsace grand cru\".",
       "type": "AOC - AOP"
     },
-    {
-      "name": "test",
-      "description": "",
-      "type": null,
-      "id": 2
-    },
-    {
-      "name": "Test2",
-      "description": "",
-      "type": null,
-      "id": 3
-    }
   ]
 }

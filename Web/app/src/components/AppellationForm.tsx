@@ -1,62 +1,48 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import IAppellation from "models/IAppellation";
-import InputText from "components/InputText";
-import WineServiceApi from "servicesApi/WineServiceApi";
 
 export interface IAppellationProps
 {
-    appellation: IAppellation;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    appellation?: IAppellation;
 }
 
 const AppellationForm = (props: IAppellationProps) =>
 {
-    const {
-        appellation,
-        handleChange,
-    } = props;
-
-    const [isValid, setIsValid] = useState<boolean>(false);
-    const [registered, setRegistered] = useState<boolean>(false);
-    const [submit, setSubmit] = useState<boolean>(false);
-    const formEl = useRef<HTMLFormElement>(null);
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>
-    {
-        setSubmit(true);
-
-        e.preventDefault();
-        e.stopPropagation();
-        if (formEl == null || formEl.current == null || !formEl.current.checkValidity())
-        {
-            setSubmit(false);
-        }
-        else
-        {
-            setIsValid(true);
-            WineServiceApi.registerAppellation(appellation)
-                .then((result: IAppellation) =>
-                {
-                    // TODO : use redux to reset the form after a successful registering.
-                    setRegistered(true);
-                })
-                .catch(() => setSubmit(false));
-        }
-    };
+    const { appellation } = props;
 
     return (
-        <Form validated={isValid} onSubmit={handleSubmit} ref={formEl} id="registerAppellation">
-            <InputText
-                label="Nom de l'appellation:"
-                placeholder="Ex: Bordeaux"
-                value={appellation.name}
-                onChange={handleChange}
-                name="name"
-                error="Le nom de l'appellation est requise."
-            />
-            <Button type="submit" disabled={submit || registered}>Ajouter</Button>
+        <Form id="registerAppellation">
+            <Form.Group>
+                <Form.Label>Nom :</Form.Label>
+                <Form.Control as="input" type="text" />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label htmlFor="vineyard">Vignoble :</Form.Label>
+                <Form.Control as="select" id="vineyard">
+                    <option>Vignoble</option>
+                    <option value="1">Alsace</option>
+                    <option value="2">Bordeaux</option>
+                    <option value="3">Beaujolais</option>
+                    <option value="4">Bourgogne</option>
+                    <option value="5">Bugey</option>
+                    <option value="6">Champagne</option>
+                </Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label htmlFor="description">Description :</Form.Label>
+                <Form.Control as="textarea" />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label htmlFor="type">Type :</Form.Label>
+                <Form.Control as="select" id="type">
+                    <option>Vignoble</option>
+                    <option value="1">AOC | AOP</option>
+                    <option value="2">IGP</option>
+                </Form.Control>
+            </Form.Group>
+            <Button type="submit">Ajouter</Button>
         </Form>
     );
 };
