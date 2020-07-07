@@ -25,6 +25,7 @@
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/webpack-env": "^1.15.1",
+    "@types/yup": "^0.29.3",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "babel-loader": "^8.1.0",
@@ -59,6 +60,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@hookform/resolvers": "0.0.5",
     "@hot-loader/react-dom": "^16.13.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
@@ -71,6 +73,7 @@
     "react-hot-loader": "^4.12.20",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "services": "0.0.3"
+    "services": "0.0.3",
+    "yup": "^0.29.1"
   }
 }
