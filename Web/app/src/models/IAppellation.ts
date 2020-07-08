@@ -11,5 +11,12 @@ export default interface IAppellation
     name: string;
     vineyard: number;
     description: string;
-    type: number;
+    label: number;
 }
+
+export const appellationSchema = yup.object({
+    name: yup.string().required(),
+    vineyard: yup.number().min(1),
+    description: yup.string().nullable(),
+    label: yup.number().min(1),
+});
