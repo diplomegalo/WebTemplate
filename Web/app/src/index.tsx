@@ -6,9 +6,9 @@ import App from "components/App";
 import "./styles/app.css";
 
 ReactDOM.render(
-    <Container>
+    <div className="inline">
         <App />
-    </Container>,
+    </div>,
     document.getElementById("root"),
 );
 

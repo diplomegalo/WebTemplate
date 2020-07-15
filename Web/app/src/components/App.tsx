@@ -13,17 +13,17 @@ import NotFound from "./NotFound";
 
 const App = () => (
     <Router>
-        <Nav>
-            <Nav.Item>
-                <NavLink className="nav-link" activeClassName="active" exact to="/">Home</NavLink>
-            </Nav.Item>
-            <Nav.Item>
-                <NavLink className="nav-link" activeClassName="active" to="appellation">Appellation</NavLink>
-            </Nav.Item>
-            <Nav.Item>
-                <NavLink className="nav-link" activeClassName="active" to="about">About</NavLink>
-            </Nav.Item>
-        </Nav>
+        <ul className="flex">
+            <li className="mr-6">
+                <NavLink className="text-blue-500 hover:text-blue-800" activeClassName="active" exact to="/">Home</NavLink>
+            </li>
+            <li className="mr-6">
+                <NavLink className="text-blue-500 hover:text-blue-800" activeClassName="active" to="appellation">Appellation</NavLink>
+            </li>
+            <li className="mr-6">
+                <NavLink className="text-blue-500 hover:text-blue-800" activeClassName="active" to="about">About</NavLink>
+            </li>
+        </ul>
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" exact component={Home} />

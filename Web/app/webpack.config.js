@@ -6,6 +6,8 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+const tailwinds = require("tailwindcss");
+const autoprefixer = require("autoprefixer");
 
 const baseConfig = {
     entry: [path.resolve(__dirname, "src/index.tsx")],
@@ -28,7 +30,18 @@ const baseConfig = {
             },
             {
                 test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
+                exclude: /node_modules/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    { loader: "css-loader", options: { importLoaders: 1 } },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            ident: "postcss",
+                            plugins: [tailwinds, autoprefixer],
+                        },
+                    },
+                ],
             },
         ],
     },
