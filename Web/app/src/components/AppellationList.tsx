@@ -21,7 +21,7 @@ const AppellationRow = (props: IAppellationRowProps) =>
             <td>{appellation.id}</td>
             <td>{appellation.name}</td>
             <td>{appellation.description}</td>
-            <td>{appellation.type}</td>
+            <td>{appellation.label}</td>
         </tr>
     );
 };

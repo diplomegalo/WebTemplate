@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Container from "react-bootstrap/esm/Container";
-import App from "components/App";
+import App from "containers/App";
 import "./styles/app.css";
 
 ReactDOM.render(
-    <div className="inline">
+    <div className="container mx-auto">
         <App />
     </div>,
     document.getElementById("root"),

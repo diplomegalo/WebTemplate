@@ -49,4 +49,8 @@
       <ProjectReference Include="..\Data\Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="app\src\modules" />
+    </ItemGroup>
+
 </Project>
