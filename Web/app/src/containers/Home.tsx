@@ -1,4 +1,4 @@
 import React from "react";
-import AppellationForm from "components/AppellationForm";
+import WineForm from "../components/WineForm";
 
-export default () => (<AppellationForm />);
+export default () => (<WineForm />);

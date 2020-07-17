@@ -1,6 +1,6 @@
-import React, {DetailedHTMLProps, TextareaHTMLAttributes} from "react";
-import {KeyValuePair} from "models/SharedTypes";
-import {FieldError} from "react-hook-form";
+import React, { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
+import { KeyValuePair } from "models/SharedTypes";
+import { FieldError } from "react-hook-form";
 
 type LabelProps =
     React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
@@ -18,6 +18,12 @@ type SelectProps =
     error?: FieldError
 }
 
+type TextAreaProps = DetailedHTMLProps<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement> & {
+    label: string
+}
+
 const Error = (props: { error: FieldError | undefined }) =>
 {
     const { error } = props;
@@ -25,7 +31,7 @@ const Error = (props: { error: FieldError | undefined }) =>
     {
         return <></>;
     }
-    const {message} = error;
+    const { message } = error;
     return <span className="text-red-500 text-xs italic">{message}</span>;
 };
 
@@ -88,16 +94,16 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
                     ref={ref}
                 >
                     {
-                        options.map((item, idx) => (
-                            <option key={Object.keys(item)[0]} value={idx}>
-                                {item[idx]}
-                            </option>
-                        ))
+                        options.map((item, idx) =>
+                        {
+                            const key: string = Object.keys(item)[0];
+                            return <option key={key} value={key}>{item[key]}</option>;
+                        })
                     }
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
                 </div>
             </div>
@@ -106,11 +112,16 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
     );
 });
 
-type TextAreaProps = DetailedHTMLProps<
-    TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HTMLTextAreaElement> & {
-    label: string
-}
+export const Submit = () => (
+    <div className="m-3 float-right">
+        <button
+            type="submit"
+            className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+        >
+            Ajouter
+        </button>
+    </div>
+);
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref) =>
 {
