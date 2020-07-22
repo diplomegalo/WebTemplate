@@ -1,5 +1,6 @@
 import IAppellation from "models/IAppellation";
 import axios, { AxiosResponse } from "axios";
+import { IVineyard } from "../models/IVineyard";
 
 export default class WineServiceApi
 {
@@ -17,6 +18,12 @@ export default class WineServiceApi
     static async listAllAppellation(): Promise<IAppellation[]>
     {
         const result = await axios.get<IAppellation[]>("appellations", this.config);
+        return result.data;
+    }
+
+    static async listAllVineyard(): Promise<IVineyard[]>
+    {
+        const result = await axios.get<IVineyard[]>("vineyards", this.config);
         return result.data;
     }
 }
