@@ -4,7 +4,7 @@ export interface IWine
 {
     id: number | undefined,
     name: string,
-    vineyards: KeyValuePair,
-    appellation: KeyValuePair,
+    vineyards: number,
+    appellation: number,
     vigneron: string,
 }

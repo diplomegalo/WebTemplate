@@ -23,7 +23,7 @@ const AppellationForm = (props: IAppellationProps) =>
         <form id="registerAppellation" onSubmit={handleSubmit(submit)}>
             <div className="flex">
                 <Input label="Name :" id="name" name="name" ref={register} placeholder="Ex: Saint Emilion" error={errors.name} />
-                <Select label="Vignoble :" options={vineyards} id="vineyards" name="vineyard" ref={register} error={errors.vineyard} />
+                <Select label="Vignoble :" options={vineyards} id="vineyards" name="vineyard" ref={register} error={errors.vineyardId} />
                 <Select label="Label :" options={labels} id="label" name="label" ref={register} error={errors.label} />
             </div>
             <div className="flex">

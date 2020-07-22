@@ -4,7 +4,7 @@ export default interface IAppellation
 {
     id: number | undefined;
     name: string;
-    vineyard: string;
+    vineyardId: number;
     description: string;
     label: number;
 }

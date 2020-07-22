@@ -3,49 +3,49 @@
     {
       "id": 1,
       "name": "Graves",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Graves est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole de Graves. Son terroir bénéficie d'un climat océanique tempéré et de sols graves pyrénéennes (pessac-léognan) et graves garonnaises.",
       "type": "AOC - AOP"
     },
     {
       "id": 2,
       "name": "Margaux",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Margaux est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole du Médoc. Son terroir bénéficie d'un climat océanique tempéré et de sols graves et calcaires.",
       "type": "AOC - AOP"
     },
     {
       "id": 3,
       "name": "Pessac-Léognan",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Pessac-Léognan est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole de Graves. Son terroir bénéficie d'un climat océanique tempéré et de sols graves pyrénéennes (pessac-léognan) et graves garonnaises.",
       "type": "AOC - AOP"
     },
     {
       "id": 4,
       "name": "Saint Emilion",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Médoc est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole du Médoc. Son terroir bénéficie d'un climat océanique tempéré et de sols graves et calcaires.",
       "type": "AOC - AOP"
     },
     {
       "id": 5,
       "name": "Medoc",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Médoc est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole du Médoc. Son terroir bénéficie d'un climat océanique tempéré et de sols graves et calcaires.",
       "type": "AOC - AOP"
     },
     {
       "id": 6,
       "name": "Pomerol",
-      "vineyard": "Bordeaux",
+      "vineyardId": "2",
       "description": "Le Pomerol est une appellation viticole dont les vins sont produits dans le vignoble de Bordeaux, vignoble du sud-ouest de la France et plus précisément dans la région viticole de Libourne. Son terroir bénéficie d'un climat océanique aquitain tempéré et de sols argilo sableux, graveleux, argiles et argiles bleues.",
       "type": "AOC - AOP"
     },
     {
       "id": 7,
       "name": "Alsace Grand Cru",
-      "vineyard": "Alsace",
+      "vineyardId": "1",
       "description": "L'Alsace grand cru est une appellation viticole dont les vins sont produits dans le vignoble d'Alsace, vignoble du nord-est de la France et plus précisément dans les régions viticoles du Bas-rhin et du Haut-rhin. Son vignoble bénéficie d'un climat tempéré-continental et d'un terroir fait de sols calcaires, granites, schistes, gneiss et grès.",
       "type": "AOC - AOP"
     }
