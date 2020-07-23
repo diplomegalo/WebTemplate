@@ -14,7 +14,8 @@ type InputProps =
 type SelectProps =
     React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & {
     label: string,
-    options: KeyValuePair[],
+    options: Map<number, string> | Map<string, string> | string[],
+    placeholder?: string,
     error?: FieldError
 }
 
@@ -80,8 +81,25 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
 {
     const {
-        label, options, id, name, error,
+        label, options, id, name, error, placeholder,
     } = props;
+
+    const optionsElements: JSX.Element[] = [];
+    if (placeholder)
+    {
+        optionsElements.push((<option key="0" value="0">{placeholder}</option>));
+    }
+
+    if (options instanceof Array)
+    {
+        options.forEach((e: string) => (
+            optionsElements.push(<option key={e} value={e}>{e}</option>)));
+    }
+    else
+    {
+        options.forEach((value, key) => (
+            optionsElements.push(<option key={key} value={key}>{value}</option>)));
+    }
 
     return (
         <FormGroup>
@@ -93,13 +111,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
                     name={name}
                     ref={ref}
                 >
-                    {
-                        options.map((item, idx) =>
-                        {
-                            const key: string = Object.keys(item)[0];
-                            return <option key={key} value={key}>{item[key]}</option>;
-                        })
-                    }
+                    {optionsElements}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
