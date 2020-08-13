@@ -97,7 +97,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
     }
     else
     {
-        options.forEach((value, key) => (
+        options.forEach((value: string, key: number|string) => (
             optionsElements.push(<option key={key} value={key}>{value}</option>)));
     }
 

@@ -34,8 +34,12 @@ module.exports = {
     rules: {
         'react/jsx-indent-props': [2, 'first'],
         'react/jsx-indent': [2, 4],
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": [
+            "warn", {
+                "additionalHooks": "useRecoilCallback"
+            }
+        ],
         // allow jsx code in .tsx and .jsx files
         'react/jsx-filename-extension': [2, {'extensions': ['.tsx', '.jsx']}],
         'import/extensions': [2, 'ignorePackages', {

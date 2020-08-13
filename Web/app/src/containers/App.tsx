@@ -5,6 +5,7 @@ import {
     Route,
     NavLink,
 } from "react-router-dom";
+import { RecoilRoot } from "recoil/dist";
 import Home from "./Home";
 import NotFound from "./NotFound";
 
@@ -19,11 +20,13 @@ export default () => (
         </header>
 
         <main className="block">
-            <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/home" exact component={Home} />
-                <Route component={NotFound} />
-            </Switch>
+            <RecoilRoot>
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/home" exact component={Home} />
+                    <Route component={NotFound} />
+                </Switch>
+            </RecoilRoot>
         </main>
     </Router>
 );

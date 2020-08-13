@@ -1,6 +1,7 @@
 import IAppellation from "models/IAppellation";
 import axios, { AxiosResponse } from "axios";
 import { IVineyard } from "../models/IVineyard";
+import { IWine } from "../models/IWine";
 
 export default class WineServiceApi
 {
@@ -9,10 +10,15 @@ export default class WineServiceApi
         timeout: 10000,
     };
 
-    static registerAppellation(appellation: IAppellation): Promise<IAppellation>
+    static listWine(): Promise<IWine[]>
     {
-        return axios.post("appellations", appellation, this.config)
-            .then((result: AxiosResponse) => result.data);
+        return axios.get("wines", this.config).then((result) => result.data);
+    }
+
+    static async registerAppellation(appellation: IAppellation): Promise<IAppellation>
+    {
+        const result = await axios.post("appellations", appellation, this.config);
+        return result.data;
     }
 
     static async listAllAppellation(): Promise<IAppellation[]>

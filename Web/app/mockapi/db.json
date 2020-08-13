@@ -52,12 +52,22 @@
   ],
   "vineyards": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Alsace"
     },
     {
       "id": 2,
       "name": "Bordeaux"
+    }
+  ],
+  "wines": [
+    {
+      "id": 1,
+      "name": "Chateau Chapique",
+      "vineyard": "Bordeaux",
+      "appellation": "Saint Emilion Grand Cru",
+      "vigneron": "Albert Chatute",
+      "vintage": 2000
     }
   ]
 }
