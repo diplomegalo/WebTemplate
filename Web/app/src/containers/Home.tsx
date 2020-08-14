@@ -6,8 +6,9 @@ import { useRecoilState } from "recoil/dist";
 
 export default () =>
 {
-    const [isOpen, setIsOpen] = useRecoilState(isModalOpen);
+    const [_, setIsOpen] = useRecoilState(isModalOpen);
     const showModal = () => setIsOpen(true);
+    const hideModal = () => setIsOpen(false);
 
     return (
         <div>
@@ -19,24 +20,24 @@ export default () =>
                         name="search"
                         type="text"
                         placeholder="blablabla..."
-                        className="border shadow rounded px-2 py-1"
+                        className="border shadow rounded px-2 py-2"
                     />
                 </div>
                 <div className="w-1/5">
                     <button
                         onClick={showModal}
                         type="button"
-                        className="block m-auto w-full py-2 border bg-blue-400 rounded text-white"
+                        className="block m-auto w-full py-3 border bg-blue-400 rounded text-white"
                     >
                         <i className="fas fa-plus fa-2x" />
                     </button>
                 </div>
             </div>
-            <div id="data" className="bg-gray-200">
+            <div id="data">
                 <WineList />
             </div>
             <Modal title="Ajouter un vin à la cave" id="add-wine-modal">
-                <WineForm />
+                <WineForm onCancel={hideModal} onSubmit={hideModal} />
             </Modal>
         </div>
     );

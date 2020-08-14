@@ -1,6 +1,7 @@
 import React, { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 import { KeyValuePair } from "models/SharedTypes";
 import { FieldError } from "react-hook-form";
+import { Button } from "./Element";
 
 type LabelProps =
     React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
@@ -62,11 +63,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
         label, name, id, placeholder, error,
     } = props;
 
+    const className = error
+        ? "appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 focus:outline-none focus:bg-white"
+        : "appearance-none block w-full text-gray-700 border rounded py-3 px-4 focus:outline-none focus:bg-white";
+
     return (
         <FormGroup>
             <Label htmlFor={id}>{label}</Label>
             <input
-                className="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className={className}
                 placeholder={placeholder}
                 type="text"
                 name={name}
@@ -123,17 +128,6 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
         </FormGroup>
     );
 });
-
-export const Submit = () => (
-    <div className="m-3 float-right">
-        <button
-            type="submit"
-            className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-        >
-            Ajouter
-        </button>
-    </div>
-);
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref) =>
 {

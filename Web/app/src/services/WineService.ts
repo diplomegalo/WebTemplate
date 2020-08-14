@@ -32,4 +32,9 @@ export default class WineServiceApi
         const result = await axios.get<IVineyard[]>("vineyards", this.config);
         return result.data;
     }
+
+    static async registerWine(data: IWine)
+    {
+        await axios.post<IWine>("wines", data, this.config);
+    }
 }
