@@ -102,16 +102,21 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
     }
     else
     {
-        options.forEach((value: string, key: number|string) => (
+        options.forEach((value:string, key: number | string) => (
+            // eslint-disable-next-line react/no-array-index-key
             optionsElements.push(<option key={key} value={key}>{value}</option>)));
     }
+
+    const className = error
+        ? "block appearance-none w-full border border-red-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
+        : "block appearance-none w-full border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
 
     return (
         <FormGroup>
             <div className="relative">
                 <Label htmlFor={id}>{label}</Label>
                 <select
-                    className="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className={className}
                     id={id}
                     name={name}
                     ref={ref}
