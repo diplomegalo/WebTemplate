@@ -51,7 +51,7 @@ export const Label = (props: LabelProps) =>
     const { htmlFor, children } = props;
 
     return (
-        <label className="block text-xs w-full uppercase font-bold" htmlFor={htmlFor}>
+        <label className="block py-2 text-xs w-full uppercase font-bold" htmlFor={htmlFor}>
             {children}
         </label>
     );
@@ -64,8 +64,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
     } = props;
 
     const className = error
-        ? "appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 focus:outline-none focus:bg-white"
-        : "appearance-none block w-full text-gray-700 border rounded py-3 px-4 focus:outline-none focus:bg-white";
+        ? "appearance-none block w-full py-3 px-4 border border-red-500 rounded text-gray-700 focus:shadow-outline focus:outline-none focus:bg-white"
+        : "appearance-none block w-full py-3 px-4 border border-gray-500 rounded text-gray-700 focus:shadow-outline focus:outline-none focus:bg-white";
 
     return (
         <FormGroup>
@@ -108,8 +108,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
     }
 
     const className = error
-        ? "block appearance-none w-full border border-red-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
-        : "block appearance-none w-full border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+        ? "block appearance-none w-full border border-red-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:shadow-outline focus:outline-none focus:bg-white"
+        : "block appearance-none w-full border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:shadow-outline focus:outline-none focus:bg-white focus:border-gray-500";
 
     return (
         <FormGroup>
@@ -123,7 +123,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
                 >
                     {optionsElements}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pt-8 px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>

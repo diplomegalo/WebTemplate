@@ -36,15 +36,17 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
         }
         if (isOpen)
         {
-            modal.style.display = "table";
+            modal.style.display = "block";
+            modal.setAttribute("aria-hidden", "false");
         }
         else
         {
             modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
         }
     }, [isOpen]);
 
-    const onClick = (e) =>
+    const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
     {
         const modal = document.getElementById(id);
         if (e.target === modal)
@@ -70,7 +72,12 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
     );
 
     return (
-        <div id={id} onClick={onClick} className="absolute left-0 top-0 w-full h-full z-40 overflow-auto bg-opacity-50 bg-gray-700">
+        <div
+            id={id}
+            onClick={onClick}
+            className="hidden absolute left-0 top-0 w-full h-full z-40 overflow-auto bg-opacity-50 bg-gray-700"
+            aria-hidden="true"
+        >
             <div id="modal-content" className="bg-white mt-1/5 m-auto border w-screen md:w-5/6 lg:w-3/4 xl:w-1/2">
                 <div id="modal-header" className="py-2 px-4 bg-gray-600 text-2xl text-white font-medium">
                     <span id="modal-title" key="modal-title mr-2" className="">{title}</span>

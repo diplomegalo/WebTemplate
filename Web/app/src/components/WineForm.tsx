@@ -69,11 +69,11 @@ const WineForm = (props: WineFormProp) =>
         <div>
             <form onSubmit={handleSubmit(submit)}>
                 <div className="grid grid-rows-2 grid-flow-row gap-4 py-4">
+                    <Input label="Nom :" name="name" ref={register} error={errors.name} />
+                    <Input label="Vigneron :" name="vigneron" ref={register} error={errors.vigneron} />
                     <Select label="Vignoble : " name="vineyard" options={vineyardsOptions} placeholder="Choisissez un vignoble..." ref={register} error={errors.vineyard} />
                     <Select label="Appellation :" name="appellation" options={appellationsOptions} placeholder="Choisissez une appellation..." ref={register} error={errors.appellation} />
                     <Select label="Millésime :" name="vintage" options={vintageOptions} ref={register} error={errors.vintage} />
-                    <Input label="Nom :" name="name" ref={register} error={errors.name} />
-                    <Input label="Vigneron :" name="vigneron" ref={register} error={errors.vigneron} />
                 </div>
                 <div className="inline-block w-full py-4">
                     <Button variant="primary">Ok</Button>
