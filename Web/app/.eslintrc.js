@@ -10,7 +10,6 @@ module.exports = {
         'plugin:import/warnings',
         'plugin:import/typescript',
         'plugin:react/recommended',
-        'airbnb',
     ],
     globals: {
         Atomics: 'readonly',
@@ -56,6 +55,9 @@ module.exports = {
         '@typescript-eslint/no-unused-expressions': ['error'],
     },
     settings: {
+        'react':{
+            'version': 'detect',
+        },
         'import/resolver': {
             // prevent error in webpack.config.js
             node: {},
@@ -67,4 +69,5 @@ module.exports = {
             ],
         }
     },
+    root: true,
 };

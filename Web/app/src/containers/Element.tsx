@@ -1,10 +1,4 @@
 import React, { ButtonHTMLAttributes } from "react";
-import { atom, useRecoilState } from "recoil/dist";
-
-export const isModalOpen = atom<boolean>({
-    key: "isModalOpen",
-    default: false,
-});
 
 type ModalProps =
     {
@@ -23,7 +17,7 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
     const {
         children, title, id, showFooter, onCancel,
     } = props;
-    const [isOpen, setIsOpen] = useRecoilState(isModalOpen);
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const closeModal = () => setIsOpen(false);
 

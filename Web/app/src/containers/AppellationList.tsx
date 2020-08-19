@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import IAppellation from "models/IAppellation";
 
 export interface IAppellationListProps
@@ -30,7 +30,7 @@ const AppellationList = (props: IAppellationListProps) =>
     const { appellationList } = props;
 
     return (
-        <Table>
+        <table>
             <thead>
                 <tr>
                     <th>#</th>
@@ -44,7 +44,7 @@ const AppellationList = (props: IAppellationListProps) =>
                     <AppellationRow key={e.id} appellation={e} />
                 ))}
             </tbody>
-        </Table>
+        </table>
     );
 };
 

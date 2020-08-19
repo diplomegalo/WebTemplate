@@ -1,10 +1,10 @@
 import React from "react";
-import { Input, Select } from "components/Form";
+import { Input, Select } from "containers/Form";
 import WineService from "services/WineService";
 import { useForm } from "react-hook-form";
-import IAppellation from "../models/IAppellation";
-import { IWine, registerWineSchema } from "../models/IWine";
-import { Button } from "./Element";
+import IAppellation from "models/IAppellation";
+import { IWine, registerWineSchema } from "models/IWine";
+import { Button } from "containers/Element";
 
 const map = (items: any[], key: string, value: string) =>
 {

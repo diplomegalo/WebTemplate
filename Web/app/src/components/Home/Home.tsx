@@ -1,12 +1,12 @@
 import React from "react";
-import WineList from "components/WineList";
-import { isModalOpen, Modal } from "components/Element";
-import WineForm from "components/WineForm";
-import { useRecoilState } from "recoil/dist";
+import WineList from "containers/WineList";
+import { Modal } from "containers/Element";
+import WineForm from "containers/WineForm";
 
-export default () =>
+const Home = () =>
 {
-    const [_, setIsOpen] = useRecoilState(isModalOpen);
+    const [_, setIsOpen] = React.useState<boolean>(false);
+
     const showModal = () => setIsOpen(true);
     const hideModal = () => setIsOpen(false);
 
@@ -42,3 +42,5 @@ export default () =>
         </div>
     );
 };
+
+export default Home;

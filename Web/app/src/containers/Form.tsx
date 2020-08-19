@@ -1,7 +1,5 @@
 import React, { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
-import { KeyValuePair } from "models/SharedTypes";
 import { FieldError } from "react-hook-form";
-import { Button } from "./Element";
 
 type LabelProps =
     React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
