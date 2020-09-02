@@ -2,10 +2,25 @@ import React from "react";
 import WineList from "containers/WineList";
 import { Modal } from "containers/Element";
 import WineForm from "containers/WineForm";
+import { IWine } from "../../models/IWine";
+import WineService from "../../services/WineService";
+
+type Action = { type: "ADD" }
 
 const Home = () =>
 {
+    const wineReducer = (state: IWine[] = [], action: Action) =>
+    {
+        if (action.type === "ADD")
+        {
+            WineService.listWine().then((result) => state = result);
+        }
+
+        return state;
+    };
+
     const [_, setIsOpen] = React.useState<boolean>(false);
+    const [wines, dispatch] = React.useReducer(wineReducer, []);
 
     const showModal = () => setIsOpen(true);
     const hideModal = () => setIsOpen(false);
