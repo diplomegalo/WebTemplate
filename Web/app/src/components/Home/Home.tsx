@@ -3,19 +3,21 @@ import WineList from "containers/WineList";
 import { Modal, modalReducer } from "containers/Element";
 import WineForm from "containers/WineForm";
 
-type Action = { type: "ADD" }
-
 const Home = () =>
 {
-    const [modalState, dispatch] = React.useReducer(modalReducer, { isOpen: false });
-    const modalId = "add-wine-modal";
+    const [_, dispatch] = React.useReducer(modalReducer, { isOpen: false });
 
-    const showModal = () => dispatch({ type: "OPEN", modalId });
-    const hideModal = () =>
+    const modalId = "add-wine-modal";
+    const cancelModal = () =>
     {
-        console.log("close", modalId)
-        dispatch({type: "CLOSE", modalId: modalId});
-    }
+        console.log("cancel");
+        dispatch({type: "CANCEL", modalId: modalId});
+    };
+    const validateModal = () =>
+    {
+        console.log("validate");
+        dispatch({type: "VALIDATE", modalId: modalId});
+    };
 
     return (
         <div>
@@ -31,21 +33,14 @@ const Home = () =>
                     />
                 </div>
                 <div className="w-1/5">
-                    <button
-                        onClick={showModal}
-                        type="button"
-                        className="block m-auto w-full py-3 border bg-blue-400 rounded text-white"
-                    >
-                        <i className="fas fa-plus fa-2x" />
-                    </button>
+                    <Modal title="Ajouter un vin à la cave" id={modalId}>
+                        <WineForm onCancel={cancelModal} onSubmit={validateModal} />
+                    </Modal>
                 </div>
             </div>
             <div id="data">
                 <WineList />
             </div>
-            <Modal title="Ajouter un vin à la cave" id="add-wine-modal">
-                <WineForm onCancel={hideModal} onSubmit={hideModal} />
-            </Modal>
         </div>
     );
 };
