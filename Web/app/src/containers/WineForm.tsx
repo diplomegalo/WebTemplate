@@ -49,9 +49,11 @@ const WineForm = (props: WineFormProp) =>
 
     const submit = (data: IWine) =>
     {
+        console.log("data", data);
         WineService.registerWine(data);
         if (onSubmit)
         {
+            console.log("data", data);
             onSubmit();
         }
     };

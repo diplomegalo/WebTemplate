@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React from "react";
 
 type ModalProps =
     {
@@ -10,14 +10,76 @@ type ModalProps =
         onValidate?: () => void;
     };
 
-type ButtonProps = React.DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { variant?: "primary" | "secondary" };
+type ButtonProps =
+    React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+    & { variant?: "primary" | "secondary" };
 
-type ModalAction = {
-    type: "OPEN" | "CLOSE" | "CANCEL",
-    payload: boolean
+type ModalAction =
+    | { type: "OPEN", modalId: string }
+    | { type: "CLOSE", modalId: string, onClose?: () => void }
+    | { type: "CANCEL", modalId: string, onCancel?: () => void }
+    | { type: "VALIDATE", modalId: string, onValidate?: () => void };
+
+type ModalState = {
+    isOpen: boolean
 }
 
-type ModalState = { isOpen: boolean }
+export const modalReducer = (state: ModalState, action: ModalAction): ModalState =>
+{
+    const modal = document.getElementById(action.modalId);
+    if (!modal)
+    {
+        return state;
+    }
+
+    const closeModal = (): ModalState =>
+    {
+        console.log("close modal");
+        modal.style.display = "none";
+        modal.setAttribute("aria-hidden", "true");
+        return {isOpen: false};
+    };
+
+    const openModal = (): ModalState =>
+    {
+        console.log("open modal");
+        modal.style.display = "block";
+        modal.setAttribute("aria-hidden", "false");
+        return {isOpen: true};
+    }
+
+    const execute = (method: (() => void) | undefined): boolean =>
+    {
+        if(method)
+        {
+            try
+            {
+                method();
+            }
+            catch (error)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    switch (action.type)
+    {
+    case "VALIDATE":
+        return execute(action.onValidate) ? closeModal() : state;
+
+    case "CANCEL":
+        return execute(action.onCancel) ? closeModal() : state;
+
+    case "OPEN":
+        return openModal();
+
+    case "CLOSE":
+        return execute(action.onClose) ? closeModal() : state;
+    }
+}
 
 export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
 {
@@ -25,69 +87,12 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
         children, title, id, showFooter, onCancel, onClose, onValidate
     } = props;
 
-    const closeModal = (modal: HTMLElement) =>
-    {
-        modal.style.display = "none";
-        modal.setAttribute("aria-hidden", "true");
-    }
 
-    const modalReducer = (state: boolean, action: ModalAction) =>
-    {
-        // retrieve modal element.
-        const modal = document.getElementById(id);
-        if (!modal)
-        {
-            throw Error(`Element with ${id} doesn't exist in the current document.`);
-        }
+    const [_, dispatch] = React.useReducer(modalReducer, { isOpen: false })
 
-        switch (action.type)
-        {
-        case "CANCEL":
-            try
-            {
-                if(onCancel)
-                {
-                    onCancel();
-                }
-                closeModal(modal);
-                return {isOpen: false};
-            }
-            catch (Error)
-            {
-                return {isOpen: true};
-            }
-        case "OPEN":
-            modal.style.display = "block";
-            modal.setAttribute("aria-hidden", "false");
-            break;
-        case "CLOSE":
-            break;
-        }
-
-    }
-
-    const [isOpen, dispatch] = React.useReducer(modalReducer, false)
-
-    const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-    {
-        const modal = document.getElementById(id);
-        if (e.target === modal)
-        {
-            dispatch({ type: "CLOSE" });
-        }
-    };
-
-    const cancel = () =>
-    {
-
-
-
-    };
-
-
-
-
-    const validate = () => onVal
+    const close = () => dispatch({type: "CLOSE", modalId: id, onClose: onClose});
+    const cancel = () => dispatch({type: "CANCEL", modalId: id, onCancel: onCancel});
+    const validate = () => dispatch({type: "VALIDATE", modalId: id, onValidate: onValidate});
 
     const footer = () => (
         <div id="modal-footer" className="inline-block w-full">
@@ -96,10 +101,11 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
         </div>
     );
 
+
     return (
         <div
             id={id}
-            onClick={onClick}
+            onClick={close}
             className="hidden absolute left-0 top-0 w-full h-full z-40 overflow-auto bg-opacity-50 bg-gray-700"
             aria-hidden="true"
         >

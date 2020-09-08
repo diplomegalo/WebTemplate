@@ -1,29 +1,21 @@
 import React from "react";
 import WineList from "containers/WineList";
-import { Modal } from "containers/Element";
+import { Modal, modalReducer } from "containers/Element";
 import WineForm from "containers/WineForm";
-import { IWine } from "../../models/IWine";
-import WineService from "../../services/WineService";
 
 type Action = { type: "ADD" }
 
 const Home = () =>
 {
-    const wineReducer = (state: IWine[] = [], action: Action) =>
+    const [modalState, dispatch] = React.useReducer(modalReducer, { isOpen: false });
+    const modalId = "add-wine-modal";
+
+    const showModal = () => dispatch({ type: "OPEN", modalId });
+    const hideModal = () =>
     {
-        if (action.type === "ADD")
-        {
-            WineService.listWine().then((result) => state = result);
-        }
-
-        return state;
-    };
-
-    const [_, setIsOpen] = React.useState<boolean>(false);
-    const [wines, dispatch] = React.useReducer(wineReducer, []);
-
-    const showModal = () => setIsOpen(true);
-    const hideModal = () => setIsOpen(false);
+        console.log("close", modalId)
+        dispatch({type: "CLOSE", modalId: modalId});
+    }
 
     return (
         <div>
