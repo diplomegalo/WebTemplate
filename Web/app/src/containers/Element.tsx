@@ -4,6 +4,7 @@ type ModalProps =
     {
         id: string,
         title: string,
+        isOpen: boolean,
         showFooter?: boolean,
         onClose?: () => void;
         onCancel?: () => void;
@@ -16,7 +17,7 @@ type ButtonProps =
 
 type ModalAction =
     | { type: "OPEN", modalId: string }
-    | { type: "CLOSE", modalId: string, onClose?: () => void, event: React.BaseSyntheticEvent }
+    | { type: "CLOSE", modalId: string, onClose?: () => void }
     | { type: "CANCEL", modalId: string, onCancel?: () => void }
     | { type: "VALIDATE", modalId: string, onValidate?: () => void };
 
@@ -27,6 +28,7 @@ type ModalState = {
 export const modalReducer = (state: ModalState, action: ModalAction): ModalState =>
 {
     console.log(action, state);
+
     const execute = (method: (() => void) | undefined): boolean =>
     {
         if (method)
@@ -50,37 +52,32 @@ export const modalReducer = (state: ModalState, action: ModalAction): ModalState
         return execute(action.onValidate) ? { isOpen: false } : state;
 
     case "CANCEL":
-        console.log("cancel");
         return execute(action.onCancel) ? { isOpen: false} : state;
 
     case "OPEN":
         return { isOpen: true};
 
     case "CLOSE":
-        return execute(action.onClose) && (action.event.target === document.getElementById(action.modalId) || action.event.target === document.getElementById("close"))
-            ? { isOpen: false}
-            : state;
+        return execute(action.onClose) ? { isOpen: false} : state;
     }
 }
 
 export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
 {
     const {
-        children, title, id, showFooter, onCancel, onClose, onValidate
+        children, title, id, showFooter, onCancel, onClose, onValidate, isOpen
     } = props;
 
-    const [modal, dispatch] = React.useReducer(modalReducer, {isOpen: false});
+    const [modal, dispatch] = React.useReducer(modalReducer, {isOpen: isOpen});
 
     const close = (e: React.BaseSyntheticEvent) =>
     {
-        console.log("close");
-        e.persist();
-        dispatch({
-            type: "CLOSE",
-            modalId: id,
-            onClose: onClose,
-            event: e
-        });
+        if(e.target !== document.getElementById(id) && e.target !== document.getElementById("close"))
+        {
+            return;
+        }
+
+        dispatch({type: "CLOSE", modalId: id, onClose: onClose});
     };
 
     const cancel = () => dispatch({type: "CANCEL", modalId: id, onCancel: onCancel});
