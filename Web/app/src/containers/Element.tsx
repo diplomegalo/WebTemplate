@@ -68,7 +68,7 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
         children, title, id, showFooter, onCancel, onClose, onValidate, isOpen
     } = props;
 
-    const [modal, dispatch] = React.useReducer(modalReducer, {isOpen: isOpen});
+    const [modal, dispatch] = React.useReducer(modalReducer, {isOpen: isOpen });
 
     const close = (e: React.BaseSyntheticEvent) =>
     {
@@ -115,7 +115,7 @@ export const Modal = (props: React.PropsWithChildren<ModalProps>) =>
                         {children}
                     </div>
                     {
-                        showFooter ? footer : <></>
+                        showFooter ? footer() : <></>
                     }
                 </div>
             </div>

@@ -25,7 +25,7 @@ const Home = () =>
                     />
                 </div>
                 <div className="w-1/5">
-                    <Modal title="Ajouter un vin à la cave" id={modalId} isOpen={modal.isOpen}>
+                    <Modal title="Ajouter un vin à la cave" id={modalId} isOpen={modal.isOpen} showFooter={true}>
                         <WineForm onCancel={cancelModal} onSubmit={validateModal} />
                     </Modal>
                 </div>
