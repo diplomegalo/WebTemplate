@@ -31,14 +31,7 @@ module.exports = {
         '@typescript-eslint',
     ],
     rules: {
-        'react/jsx-indent-props': [2, 'first'],
-        'react/jsx-indent': [2, 4],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": [
-            "warn", {
-                "additionalHooks": "useRecoilCallback"
-            }
-        ],
+
         // allow jsx code in .tsx and .jsx files
         'react/jsx-filename-extension': [2, {'extensions': ['.tsx', '.jsx']}],
         'import/extensions': [2, 'ignorePackages', {
@@ -47,10 +40,9 @@ module.exports = {
             'ts': 'never',
             'tsx': 'never'
         }],
-        'linebreak-style': ["error", 'windows'],
-        'indent': ["error", 4],
         'quotes': ["error", 'double'],
         'brace-style': ['error', 'allman'],
+        'no-undef': 'off',
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-expressions': ['error'],
     },

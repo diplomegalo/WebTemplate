@@ -1,15 +1,13 @@
 import React from "react";
 import WineList from "containers/WineList";
-import { Modal, modalReducer } from "containers/Element";
-import WineForm from "containers/WineForm";
+import { Modal } from "../../containers/Element";
+import WineForm from "../../containers/WineForm";
 
 const Home = () =>
 {
-    const [modal, dispatch] = React.useReducer(modalReducer, { isOpen: false });
-
     const modalId = "add-wine-modal";
-    const cancelModal = () => dispatch({type: "CANCEL", modalId: modalId});
-    const validateModal = () => dispatch({type: "VALIDATE", modalId: modalId});
+    const cancelModal = () => console.log("cancelModal");
+    const validateModal = () => console.log("validateModal");
 
     return (
         <div>
@@ -25,8 +23,8 @@ const Home = () =>
                     />
                 </div>
                 <div className="w-1/5">
-                    <Modal title="Ajouter un vin à la cave" id={modalId} isOpen={modal.isOpen} showFooter={true}>
-                        <WineForm onCancel={cancelModal} onSubmit={validateModal} />
+                    <Modal title="Ajouter un vin à la cave" id={modalId} showFooter={true}>
+                        {/*<WineForm onCancel={cancelModal} onSubmit={validateModal} />*/}
                     </Modal>
                 </div>
             </div>

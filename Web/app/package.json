@@ -66,18 +66,18 @@
   "dependencies": {
     "@hookform/resolvers": "0.0.5",
     "@hot-loader/react-dom": "^16.13.0",
+    "@types/react-redux": "^7.1.9",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
-    "react-datepicker": "^2.15.0",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.7.2",
     "react-hot-loader": "^4.12.20",
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "recoil": "0.0.10",
+    "redux": "^4.0.5",
     "services": "0.0.3",
     "yup": "^0.29.1"
   }
