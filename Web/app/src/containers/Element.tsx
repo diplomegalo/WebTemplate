@@ -19,31 +19,25 @@ type ModalProps =
     };
 
 type ModalStateProps = { isOpen: boolean }
-type ModalDispatchProps =
-    {
-    openModal: (id: string) => void,
-    validateModal: (id: string, onValidate?: () => void) => void,
-    cancelModal: (id: string, onCancel?: () => void) => void,
-    closeModal: (id: string, onClose?: () => void) => void
-}
+type ModalDispatchProps = ReturnType<typeof modalDispatchToProps>;
 
-const modalStateToProps = (state: RootState) => ({ isOpen: state.modal.isOpen });
-const modalDispatchToProps = (dispatch: Dispatch<Action>) => bindActionCreators(modalActions, dispatch)
+const modalStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
+const modalDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)})
 const connector = connect(modalStateToProps, modalDispatchToProps)
 
 type ModalReduxProps = ModalProps & ModalStateProps & ModalDispatchProps;
 
-export const Modal = connector((props: ModalReduxProps) =>
+export const Modal = connector((props: React.PropsWithChildren<ModalReduxProps>) =>
 {
     const {
-        title, id, showFooter, onCancel, onClose, onValidate, isOpen, openModal, validateModal, cancelModal, closeModal
+        children, title, id, showFooter, onCancel, onClose, onValidate, isOpen, actions
     } = props;
 
-
-    const close = () => closeModal(id, onClose);
-    const cancel = () => cancelModal(id, onCancel);
-    const validate = () => validateModal(id, onValidate);
-    const open = () => openModal(id);
+    const escape = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.target === document.getElementById(id) && actions.closeModal(id, onClose);
+    const close = () => actions.closeModal(id, onClose);
+    const cancel = () => actions.cancelModal(id, onCancel);
+    const validate = () => actions.validateModal(id, onValidate);
+    const open = () => actions.openModal(id);
 
     const footer = () => (
         <div id="modal-footer" className="inline-block w-full">
@@ -63,7 +57,7 @@ export const Modal = connector((props: ModalReduxProps) =>
             </button>
             <div
                 id={id}
-                onClick={close}
+                onClick={escape}
                 className={`${isOpen ? "" : "hidden "}absolute left-0 top-0 w-full h-full z-40 overflow-auto bg-opacity-50 bg-gray-700`}
                 aria-hidden="true"
             >
@@ -73,7 +67,7 @@ export const Modal = connector((props: ModalReduxProps) =>
                         <span id="close" className="float-right cursor-pointer hover:text-gray-300" onClick={close}>&times;</span>
                     </div>
                     <div id="modal-body">
-                        {/*{children}*/}
+                        {children}
                     </div>
                     {
                         showFooter ? footer() : <></>
