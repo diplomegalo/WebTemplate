@@ -108,6 +108,22 @@
       "vineyard": 1,
       "name": "Test",
       "id": 6
+    },
+    {
+      "vintage": 2009,
+      "vigneron": "",
+      "appellation": 1,
+      "vineyard": 2,
+      "name": "Chateau Lapiquette",
+      "id": 7
+    },
+    {
+      "vintage": 2009,
+      "vigneron": "",
+      "appellation": 1,
+      "vineyard": 2,
+      "name": "Chateau Lapiquette",
+      "id": 8
     }
   ]
 }

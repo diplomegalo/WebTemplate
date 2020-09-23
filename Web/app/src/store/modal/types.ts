@@ -1,4 +1,4 @@
-export interface ModalState {
+export type ModalState = {
     isOpen: boolean
 }
 

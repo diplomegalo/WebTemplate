@@ -11,16 +11,19 @@
     <ItemGroup>
       <Compile Remove="app\node_modules\**" />
       <Compile Remove="app\dist\**" />
+      <Compile Remove="app\src\modules\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="app\node_modules\**" />
       <EmbeddedResource Remove="app\dist\**" />
+      <EmbeddedResource Remove="app\src\modules\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="app\node_modules\**" />
       <None Remove="app\dist\**" />
+      <None Remove="app\src\modules\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -34,6 +37,7 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
+      <Content Remove="app\src\modules\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -47,10 +51,6 @@
       <ProjectReference Include="..\Business\Business.csproj" />
       <ProjectReference Include="..\Common\Common.csproj" />
       <ProjectReference Include="..\Data\Data.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="app\src\modules" />
     </ItemGroup>
 
 </Project>
