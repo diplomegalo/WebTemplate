@@ -1,7 +1,7 @@
-import { CANCEL, CLOSE, OPEN, VALIDATE, ModalActionTypes, ModalState } from "./types";
+import { CANCEL, CLOSE, OPEN, VALIDATE, ModalActionTypes, Modal } from "./types";
 
-const initialState: ModalState = { isOpen: false }
-export const modalReducer = (state: ModalState = initialState, action: ModalActionTypes): ModalState =>
+const initialState: Modal = { isOpen: false }
+export const modalReducer = (state: Modal = initialState, action: ModalActionTypes): Modal =>
 {
     const execute = (method: (() => void) | undefined): boolean =>
     {

@@ -5,7 +5,7 @@ import * as wineActions   from "../store/wine/actions";
 import { Action, bindActionCreators, Dispatch } from "redux";
 
 const mapStateToProps = (state: RootState) => ({ wines: state.wines });
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({ actions: bindActionCreators(wineActions, dispatch) });
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({ actions: { loadWines: bindActionCreators(wineActions.loadWines, dispatch) } });
 
 const WineList = (props : ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) =>
 {

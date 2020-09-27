@@ -2,11 +2,15 @@ import React from "react";
 import { Input, Select } from "containers/Form";
 import WineService from "services/WineService";
 import { useForm } from "react-hook-form";
-import IAppellation from "models/IAppellation";
-import { IWine, registerWineSchema } from "models/IWine";
 import { Button } from "containers/Element";
 import { RootState } from "../store";
 import { connect } from "react-redux";
+import { Action, bindActionCreators, Dispatch } from "redux";
+import * as yup from "yup";
+import { loadVineyards } from "../store/vineyard/actions";
+import { loadAppellations } from "../store/appellation/actions";
+import { registerWine } from "../store/wine/actions";
+import { Wine } from "../store/wine/types";
 
 const map = (items: any[], key: string, value: string) =>
 {
@@ -20,20 +24,22 @@ type WineFormProp = {
     onSubmit?: () => void,
 }
 
-const modalStateToProps = (state: RootState) => ({ isOpen: state.modal.isOpen });
+export const registerWineSchema = yup.object({
+    name: yup.string().required("Vous devez entrez le nom du vin."),
+    vineyard: yup.number().min(1, "Vous devez entrez le nom du vignoble."),
+    appellation: yup.number().min(1, "Vous devez entrez le nom de l'appellation."),
+    vigneron: yup.string().nullable(),
+    vintage: yup.number().min(new Date().getUTCFullYear() - 50, "Vous êtes sûr que votre vin est aussi vieux ?").max(new Date().getUTCFullYear(), "Mais c'est un vin du futur !"),
+});
 
-const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
+const WineForm = (props: WineFormProp & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) =>
 {
-    const [appellations, setAppellations] = React.useState<IAppellation[]>([]);
-    const [appellationsOptions, setAppellationOptions] = React.useState<Map<string, string>>(new Map());
-    const [vineyardsOptions, setVineyardsOptions] = React.useState<Map<string, string>>(new Map());
+    const { onCancel, onSubmit, isOpen, vineyards, appellations, actions } = props;
     const [vintageOptions, _] = React.useState<string[]>(Array.from(Array(50), (_, i) => (new Date().getUTCFullYear() - i).toString()));
-
-    const { onCancel, onSubmit, isOpen } = props;
 
     const {
         register, watch, errors, handleSubmit, reset,
-    } = useForm<IWine>({ validationSchema: registerWineSchema });
+    } = useForm<Wine>({ validationSchema: registerWineSchema });
 
     const selectedVineyard: number = watch("vineyard");
 
@@ -43,37 +49,32 @@ const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
     {
         if (isOpen)
         {
-            firstInput.current.focus();
+            if(firstInput !== null && firstInput.current !== null)
+            {
+                firstInput.current.focus();
+            }
+
             document.addEventListener("keydown", (e) => e.key === "Enter" && handleSubmit(submit)());
 
-            WineService.listAllVineyard().then((result) => setVineyardsOptions(map(result, "id", "name")));
-            WineService.listAllAppellation().then((result) => setAppellations(result));
+            actions.loadVineyards();
+            actions.loadAppellations();
         }
         else
         {
+            reset();
             return document.removeEventListener("keydown", (e) => e.key === "Enter" && handleSubmit(submit)());
         }
     }, [isOpen]);
 
-    React.useEffect(() =>
-    {
-        if (selectedVineyard && selectedVineyard > 0)
-        {
-            setAppellationOptions(map(appellations.filter((ap) => ap.vineyardId === selectedVineyard), "id", "name"));
-        }
-    }, [selectedVineyard]);
+    const appellationSubset = map(appellations.filter((ap) => ap.vineyardId === selectedVineyard), "id", "name")
 
-    const submit = (data: IWine) =>
+    const submit = (data: Wine) =>
     {
-        WineService.registerWine(data);
+        actions.registerWine(data);
         !!onSubmit && onSubmit();
     };
 
-    const handleCancel = () =>
-    {
-        reset();
-        !!onCancel && onCancel();
-    };
+    const handleCancel = () => !!onCancel && onCancel();
 
     return (
         <div>
@@ -85,9 +86,9 @@ const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
                         firstInput.current = e;
                     }} />
                     <Input label="Vigneron :" name="vigneron" ref={register} error={errors.vigneron} />
-                    <Select label="Vignoble : " name="vineyard" options={vineyardsOptions}
+                    <Select label="Vignoble : " name="vineyard" options={map(vineyards, "id", "name")}
                             placeholder="Choisissez un vignoble..." ref={register} error={errors.vineyard} />
-                    <Select label="Appellation :" name="appellation" options={appellationsOptions}
+                    <Select label="Appellation :" name="appellation" options={appellationSubset}
                             placeholder="Choisissez une appellation..." ref={register} error={errors.appellation} />
                     <Select label="Millésime :" name="vintage" options={vintageOptions} ref={register}
                             error={errors.vintage} />
@@ -101,4 +102,19 @@ const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
     );
 };
 
-export default connect(modalStateToProps)(WineForm);
+const mapStateToProps = (state: RootState) => ({
+    isOpen: state.modal.isOpen,
+    vineyards: state.vineyards,
+    appellations: state.appellations
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+    actions:
+        {
+            loadVineyards: bindActionCreators(loadVineyards, dispatch),
+            loadAppellations: bindActionCreators(loadAppellations, dispatch),
+            registerWine: bindActionCreators(registerWine, dispatch),
+        }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
