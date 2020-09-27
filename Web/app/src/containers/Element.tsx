@@ -19,11 +19,11 @@ type ModalProps =
     };
 
 type ModalStateProps = { isOpen: boolean }
-type ModalDispatchProps = ReturnType<typeof modalDispatchToProps>;
+type ModalDispatchProps = ReturnType<typeof mapDispatchToProps>;
 
-const modalStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
-const modalDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)})
-const connector = connect(modalStateToProps, modalDispatchToProps)
+const mapStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)});
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type ModalReduxProps = ModalProps & ModalStateProps & ModalDispatchProps;
 

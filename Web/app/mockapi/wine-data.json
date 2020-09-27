@@ -68,62 +68,6 @@
       "appellation": "Saint Emilion Grand Cru",
       "vigneron": "Albert Chatute",
       "vintage": 2000
-    },
-    {
-      "vintage": 2010,
-      "vigneron": "Test",
-      "appellation": 7,
-      "vineyard": 1,
-      "name": "Test",
-      "id": 2
-    },
-    {
-      "vintage": 2017,
-      "vigneron": "test",
-      "appellation": 7,
-      "vineyard": 1,
-      "name": "Test",
-      "id": 3
-    },
-    {
-      "vintage": 2020,
-      "vigneron": "Test",
-      "appellation": 2,
-      "vineyard": 2,
-      "name": "Test",
-      "id": 4
-    },
-    {
-      "vintage": 2014,
-      "vigneron": "Test",
-      "appellation": 4,
-      "vineyard": 2,
-      "name": "Test",
-      "id": 5
-    },
-    {
-      "vintage": 2006,
-      "vigneron": "",
-      "appellation": 7,
-      "vineyard": 1,
-      "name": "Test",
-      "id": 6
-    },
-    {
-      "vintage": 2009,
-      "vigneron": "",
-      "appellation": 1,
-      "vineyard": 2,
-      "name": "Chateau Lapiquette",
-      "id": 7
-    },
-    {
-      "vintage": 2009,
-      "vigneron": "",
-      "appellation": 1,
-      "vineyard": 2,
-      "name": "Chateau Lapiquette",
-      "id": 8
     }
   ]
 }

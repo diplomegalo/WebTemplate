@@ -32,12 +32,12 @@
       <AdditionalFiles Include="..\stylecop.json">
         <Link>stylecop.json</Link>
       </AdditionalFiles>
-      <Content Update="app\mockapi\db.json">
+      <Content Remove="app\src\modules\**" />
+      <Content Update="app\mockapi\wine-data.json">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <Content Remove="app\src\modules\**" />
     </ItemGroup>
 
     <ItemGroup>

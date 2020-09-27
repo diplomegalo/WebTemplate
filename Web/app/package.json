@@ -5,9 +5,12 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --open",
-    "mock": "nodemon --watch mockapi/db.json mockapi/mockapi.js"
+    "build:prod": "webpack --mode production",
+    "build:dev": "webpack --mode production",
+    "start": "run-p start:dev mock:api",
+    "start:dev": "webpack-dev-server --mode development --open",
+    "premock:api": "node ./mockapi/createDb.js",
+    "mock:api": "node mockapi/mockapi.js"
   },
   "author": "Delsoft",
   "license": "MIT",
@@ -49,6 +52,7 @@
     "json-server": "^0.16.1",
     "mini-css-extract-plugin": "^0.9.0",
     "nodemon": "^2.0.3",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
     "source-map-loader": "^0.2.4",
@@ -79,6 +83,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "services": "0.0.3",
     "yup": "^0.29.1"
   }

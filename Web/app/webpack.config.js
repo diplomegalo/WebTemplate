@@ -81,6 +81,9 @@ const devConfig = {
         historyApiFallback: true,
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.API_URL": JSON.stringify("http://localhost:3000/api/"),
+        }),
         new ForkTsCheckerWebpackPlugin({ eslint: true }),
     ],
     resolve: {

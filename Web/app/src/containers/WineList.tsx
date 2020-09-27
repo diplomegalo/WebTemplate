@@ -1,13 +1,19 @@
 import React from "react";
-import WineService from "services/WineService";
-import { IWine } from "models/IWine";
+import { RootState } from "../store";
+import { connect } from "react-redux";
+import * as wineActions   from "../store/wine/actions";
+import { Action, bindActionCreators, Dispatch } from "redux";
 
-const WineList = () =>
+const mapStateToProps = (state: RootState) => ({ wines: state.wines });
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({ actions: bindActionCreators(wineActions, dispatch) });
+
+const WineList = (props : ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) =>
 {
-    const [wines, setWines] = React.useState<IWine[]>([]);
+    const { wines } = props;
+
     React.useEffect(() =>
     {
-        WineService.listWine().then((result) => setWines(result));
+        props.actions.loadWines();
     }, []);
 
     return (
@@ -32,4 +38,4 @@ const WineList = () =>
     );
 };
 
-export default WineList;
+export default connect(mapStateToProps, mapDispatchToProps)(WineList);

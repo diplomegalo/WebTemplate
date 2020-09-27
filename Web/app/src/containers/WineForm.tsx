@@ -20,7 +20,7 @@ type WineFormProp = {
     onSubmit?: () => void,
 }
 
-const wineFormStateToProps = (state: RootState) => ({ isOpen: state.modal.isOpen });
+const modalStateToProps = (state: RootState) => ({ isOpen: state.modal.isOpen });
 
 const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
 {
@@ -101,4 +101,4 @@ const WineForm = (props: WineFormProp & { isOpen: boolean }) =>
     );
 };
 
-export default connect(wineFormStateToProps)(WineForm);
+export default connect(modalStateToProps)(WineForm);
