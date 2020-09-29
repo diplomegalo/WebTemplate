@@ -3,7 +3,7 @@ import { Action, bindActionCreators, Dispatch } from "redux";
 import * as modalActions from "../../store/modal/actions";
 import { connect } from "react-redux";
 import React from "react";
-import { Button } from "../Element";
+import Button from "../elements/Button";
 
 type ModalProps =
     {

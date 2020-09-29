@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Select } from "containers/Form";
 import { useForm } from "react-hook-form";
-import { Button } from "containers/Element";
+import Button from "containers/elements/Button";
 import { RootState } from "../store";
 import { connect } from "react-redux";
 import { Action, bindActionCreators, Dispatch } from "redux";
