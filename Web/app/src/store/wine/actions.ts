@@ -5,12 +5,12 @@ import { Action, Dispatch } from "redux";
 export const wineRegistered = (wine: Wine, method: "UPDATE" | "INSERT") => ({ type: WINE_REGISTERED, payload: { wine }, error: false, meta: method});
 
 export const registerWine = (wine: Wine) =>
-    (dispatch: Dispatch<Action>) => WineService.registerWine(wine)
+    (dispatch: Dispatch<Action>) => WineService.instance().registerWine(wine)
         .then((wine) => dispatch(wineRegistered(wine, wine.id ? "UPDATE" : "INSERT")));
 
 export const loadWines = () =>
     (dispatch: Dispatch<Action>) =>
-        WineService.listWine()
+        WineService.instance().listWine()
             .then((wines) => dispatch(wineLoaded(wines)))
             .catch((error) =>
             {

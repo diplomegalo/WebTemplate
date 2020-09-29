@@ -1,17 +1,19 @@
-import IAppellation from "../models/IAppellation";
 import ServiceApi from "./ServiceApi";
 import axios from "axios";
+import { Appellation } from "../store/appellation/types";
 
-export class AppellationApi
+export class AppellationApi extends ServiceApi
 {
-    static async registerAppellation(appellation: IAppellation): Promise<IAppellation>
+    static _instance: AppellationApi;
+    static instance = () => AppellationApi._instance || (AppellationApi._instance = new AppellationApi());
+
+    public async registerAppellation(appellation: Appellation): Promise<Appellation>
     {
-        return await ServiceApi.post("appellations", appellation);
+        return await this.post("appellations", appellation);
     }
 
-    static async loadAppellation(): Promise<IAppellation[]>
+    public async loadAppellation(): Promise<Appellation[]>
     {
-        const result = await axios.get<IAppellation[]>("appellations", ServiceApi.config);
-        return result.data;
+        return await axios.get("appellations");
     }
 }

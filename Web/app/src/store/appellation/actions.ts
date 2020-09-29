@@ -10,7 +10,7 @@ export const appellationLoaded = (appellations: Appellation[]) => ({
 });
 
 export const loadAppellations = () =>
-    (dispatch: Dispatch<Action>) => AppellationApi.loadAppellation()
+    (dispatch: Dispatch<Action>) => AppellationApi.instance().loadAppellation()
         .then((appellations) => dispatch(appellationLoaded(appellations)))
         .catch((err) =>
         {

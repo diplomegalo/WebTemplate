@@ -1,30 +1,40 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
+const STATUS_OK: string = "OK";
+
 export default class ServiceApi
 {
-    static config = {
+    config = {
         baseURL: process.env.API_URL,
         timeout: 10000,
     };
 
-    public static handleResponse<T>(response: AxiosResponse<T>): T
+    public handleResponse<T>(response: AxiosResponse<T>): T
     {
-        if(response.statusText === "Ok")
+        if (response.statusText === STATUS_OK)
         {
             return response.data;
         }
-        throw new Error("Une erreur s'est produite veillez.");
+
+        throw new Error("An error occurs when handle response.");
     }
 
-    public static handleError(error: AxiosError)
+    public handleError(error: AxiosError)
     {
         console.log("Error", error.message);
     }
 
-    public static post<TData>(url: string, data: TData): Promise<TData>
+    public post<T>(url: string, data: T): Promise<T>
     {
-        return axios.post("url", data, this.config)
-            .then(ServiceApi.handleResponse)
-            .catch(ServiceApi.handleError)
+        return axios.post(url, data)
+            .then(this.handleResponse)
+            .catch(this.handleError);
+    }
+
+    public get<T>(url: string): Promise<T>
+    {
+        return axios.get(url, this.config)
+            .then(this.handleResponse)
+            .catch(this.handleError);
     }
 }

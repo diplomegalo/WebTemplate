@@ -1,6 +1,5 @@
 import React from "react";
 import { Input, Select } from "containers/Form";
-import WineService from "services/WineService";
 import { useForm } from "react-hook-form";
 import { Button } from "containers/Element";
 import { RootState } from "../store";
@@ -70,8 +69,11 @@ const WineForm = (props: WineFormProp & ReturnType<typeof mapStateToProps> & Ret
 
     const submit = (data: Wine) =>
     {
+        if(onSubmit)
+        {
+            onSubmit()
+        }
         actions.registerWine(data);
-        !!onSubmit && onSubmit();
     };
 
     const handleCancel = () => !!onCancel && onCancel();

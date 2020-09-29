@@ -4,9 +4,11 @@ import ServiceApi from "./ServiceApi";
 
 export class VineyardService
 {
-    static async listAllVineyard(): Promise<Vineyard[]>
+    private static _instance: VineyardService;
+    public static instance = () => VineyardService._instance || (VineyardService._instance = new VineyardService());
+
+    public async listAllVineyard(): Promise<Vineyard[]>
     {
-        const result = await axios.get<Vineyard[]>("vineyards", ServiceApi.config);
-        return result.data;
+        return await axios.get("vineyards");
     }
 }

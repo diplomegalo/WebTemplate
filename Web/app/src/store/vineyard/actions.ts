@@ -1,8 +1,8 @@
 import { VineyardService } from "../../services/VineyardService";
-import { VINEYARD_LOADED } from "./types";
+import { Vineyard, VINEYARD_LOADED } from "./types";
 import { Action, Dispatch } from "redux";
 
-export const vineyardLoaded = (vineyards: VineyardService[]) => ({
+export const vineyardLoaded = (vineyards: Vineyard[]) => ({
     type: VINEYARD_LOADED,
     payload: { vineyards },
     error: false,
@@ -10,7 +10,7 @@ export const vineyardLoaded = (vineyards: VineyardService[]) => ({
 });
 
 export const loadVineyards = () =>
-    (dispatch: Dispatch<Action>) => VineyardService.listAllVineyard()
+    (dispatch: Dispatch<Action>) => VineyardService.instance().listAllVineyard()
         .then((vineyards) => dispatch(vineyardLoaded(vineyards)))
         .catch((error) =>
         {
