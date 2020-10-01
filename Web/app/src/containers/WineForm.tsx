@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Select } from "containers/Form";
+import { Input, Select } from "containers/elements/Form";
 import { useForm } from "react-hook-form";
 import Button from "containers/elements/Button";
 import { RootState } from "../store";
@@ -18,9 +18,31 @@ const map = (items: any[], key: string, value: string) =>
     return result;
 };
 
-type WineFormProp = {
+type mapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
+
+type WineProps = {
+    onInit?: () => void,
     onCancel?: () => void,
     onSubmit?: () => void,
+} & ReturnType<typeof mapStateToProps> & mapDispatchToPropsType
+
+type Initiable = { onInit: () => void };
+
+const withInit = <T extends WineProps>(Component: React.ComponentType<T>, { actions }: mapDispatchToPropsType) =>
+{
+    class withInit extends React.Component<Subtract<T, WineProps>, never>
+    {
+        init = () =>
+        {
+            actions.loadVineyards();
+            actions.loadAppellations();
+        }
+
+        render()
+        {
+            return (<Component { ...this.props as T } onInit={this.init} />)
+        }
+    }
 }
 
 export const registerWineSchema = yup.object({
@@ -31,7 +53,7 @@ export const registerWineSchema = yup.object({
     vintage: yup.number().min(new Date().getUTCFullYear() - 50, "Vous êtes sûr que votre vin est aussi vieux ?").max(new Date().getUTCFullYear(), "Mais c'est un vin du futur !"),
 });
 
-const WineForm = (props: WineFormProp & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) =>
+const WineForm = (props: WineProps) =>
 {
     const { onCancel, onSubmit, isOpen, vineyards, appellations, actions } = props;
     const [vintageOptions, _] = React.useState<string[]>(Array.from(Array(50), (_, i) => (new Date().getUTCFullYear() - i).toString()));
