@@ -16,8 +16,6 @@ type ModalProps =
         children: React.ReactNode;
     };
 
-const withModal =>
-
 const mapStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)});
 

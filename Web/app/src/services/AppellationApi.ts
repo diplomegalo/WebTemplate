@@ -14,6 +14,6 @@ export class AppellationApi extends ServiceApi
 
     public async loadAppellation(): Promise<Appellation[]>
     {
-        return await axios.get("appellations");
+        return await this.get("appellations");
     }
 }

@@ -4,10 +4,11 @@ const STATUS_OK: string = "OK";
 
 export default class ServiceApi
 {
-    config = {
-        baseURL: process.env.API_URL,
-        timeout: 10000,
-    };
+    public _invoke = (() =>
+    {
+        axios.defaults.baseURL = process.env.API_URL;
+        axios.defaults.timeout = 10000;
+    })();
 
     public handleResponse<T>(response: AxiosResponse<T>): T
     {
@@ -33,7 +34,7 @@ export default class ServiceApi
 
     public get<T>(url: string): Promise<T>
     {
-        return axios.get(url, this.config)
+        return axios.get(url)
             .then(this.handleResponse)
             .catch(this.handleError);
     }

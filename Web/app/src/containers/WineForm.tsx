@@ -26,16 +26,15 @@ type WineProps = {
     onSubmit?: () => void,
 } & ReturnType<typeof mapStateToProps> & mapDispatchToPropsType
 
-type Initiable = { onInit: () => void };
-
-const withInit = <T extends WineProps>(Component: React.ComponentType<T>, { actions }: mapDispatchToPropsType) =>
+const withInit = <T extends WineProps>(Component: React.ComponentType<T>) =>
 {
-    class withInit extends React.Component<Subtract<T, WineProps>, never>
+    return class withInit extends React.Component<Exclude<T, { onInit: () => void }>, any>
     {
         init = () =>
         {
-            actions.loadVineyards();
-            actions.loadAppellations();
+            console.log("That's a hoc ! ", this.props);
+            this.props.actions.loadVineyards();
+            this.props.actions.loadAppellations();
         }
 
         render()
@@ -55,7 +54,7 @@ export const registerWineSchema = yup.object({
 
 const WineForm = (props: WineProps) =>
 {
-    const { onCancel, onSubmit, isOpen, vineyards, appellations, actions } = props;
+    const { onInit, onCancel, onSubmit, isOpen, vineyards, appellations, actions } = props;
     const [vintageOptions, _] = React.useState<string[]>(Array.from(Array(50), (_, i) => (new Date().getUTCFullYear() - i).toString()));
 
     const {
@@ -65,6 +64,8 @@ const WineForm = (props: WineProps) =>
     const selectedVineyard: number = watch("vineyard");
 
     const firstInput = React.useRef<HTMLInputElement | null>(null);
+
+    React.useEffect(() => !!onInit && onInit() || console.log("pas d'init"), []);
 
     React.useEffect(() =>
     {
@@ -141,4 +142,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
         }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withInit(WineForm));
