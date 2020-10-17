@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import WineList from "containers/WineList";
+import Modal from "../../containers/elements/Modal";
 import WineForm from "../../containers/WineForm";
 import { useDispatch } from "react-redux";
 import { cancelModal, validateModal } from "../../store/modal/actions";
-import Modal from "../../containers/elements/Modal";
 
 const Home = () =>
 {

@@ -15,4 +15,4 @@ export const loadAppellations = () =>
         .catch((err) =>
         {
             throw err;
-        })
+        });

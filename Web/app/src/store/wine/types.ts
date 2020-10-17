@@ -1,9 +1,14 @@
+import { Vineyard } from "../vineyard/types";
+import { Appellation } from "../appellation/types";
+
 export type Wine =
 {
     id?: number,
     name: string,
-    vineyard: number,
-    appellation: number,
+    vineyardId: number,
+    vineyard: Vineyard,
+    appellationId: number,
+    appellation: Appellation,
     vigneron?: string,
     vintage: number,
 }

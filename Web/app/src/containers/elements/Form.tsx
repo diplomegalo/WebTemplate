@@ -40,7 +40,7 @@ const FormGroup = (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEl
 {
     const { children } = props;
     return (
-        <div className="w-full px-3 my-3">{children}</div>
+        <div className="w-full px-3">{children}</div>
     );
 };
 

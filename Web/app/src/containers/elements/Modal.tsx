@@ -5,7 +5,12 @@ import { connect } from "react-redux";
 import React from "react";
 import Button from "../elements/Button";
 
-type ModalProps =
+const mapStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)});
+
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
+type MapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
+type ModalPropsType =
     {
         id: string,
         title: string,
@@ -16,10 +21,9 @@ type ModalProps =
         children: React.ReactNode;
     };
 
-const mapStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)});
+type ModalProps = ModalPropsType & MapStateToPropsType & MapDispatchToPropsType;
 
-const Modal = (props: ModalProps & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) =>
+const Modal = (props: ModalProps) =>
 {
     const {
         children, title, id, showFooter, onCancel, onClose, onValidate, isOpen, actions
@@ -35,7 +39,7 @@ const Modal = (props: ModalProps & ReturnType<typeof mapStateToProps> & ReturnTy
 
     React.useEffect(() =>
     {
-        if(!!btnRef && !!btnRef.current)
+        if (!!btnRef && !!btnRef.current)
         {
             // @ts-ignore
             btnRef.current.focus();
@@ -74,7 +78,7 @@ const Modal = (props: ModalProps & ReturnType<typeof mapStateToProps> & ReturnTy
                         <span id="close" className="float-right cursor-pointer hover:text-gray-300" onClick={close}>&times;</span>
                     </div>
                     <div id="modal-body">
-                        {children}
+                        {isOpen && children}
                     </div>
                     {
                         showFooter ? footer() : <></>

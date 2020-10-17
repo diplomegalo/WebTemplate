@@ -4,15 +4,16 @@ import { Action, Dispatch } from "redux";
 
 export const vineyardLoaded = (vineyards: Vineyard[]) => ({
     type: VINEYARD_LOADED,
-    payload: { vineyards },
+    payload: {vineyards},
     error: false,
     meta: undefined
 });
 
 export const loadVineyards = () =>
-    (dispatch: Dispatch<Action>) => VineyardService.instance().listAllVineyard()
-        .then((vineyards) => dispatch(vineyardLoaded(vineyards)))
-        .catch((error) =>
-        {
-            throw error;
-        })
+    (dispatch: Dispatch<Action>) =>
+        VineyardService.instance().listAllVineyard()
+            .then((result) => dispatch(vineyardLoaded(result)))
+            .catch((error) =>
+            {
+                throw error;
+            })

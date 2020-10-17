@@ -64,8 +64,8 @@
     {
       "id": 1,
       "name": "Chateau Chapique",
-      "vineyard": "Bordeaux",
-      "appellation": "Saint Emilion Grand Cru",
+      "vineyardId": 2,
+      "appellationId": 4,
       "vigneron": "Albert Chatute",
       "vintage": 2000
     }

@@ -1,7 +1,7 @@
 import { Appellation, APPELLATION_LOADED, AppellationActionTypes } from "./types";
+import initialState from "../initialState";
 
-const initialState: Appellation[] = [];
-export const appellationReducer = (state: Appellation[] = initialState, action: AppellationActionTypes): Appellation[] =>
+export const appellationReducer = (state: Appellation[] = initialState.appellations, action: AppellationActionTypes): Appellation[] =>
 {
     switch (action.type)
     {

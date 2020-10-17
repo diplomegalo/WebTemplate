@@ -1,7 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const STATUS_OK: string = "OK";
-
 export default class ServiceApi
 {
     public _invoke = (() =>
@@ -12,7 +10,7 @@ export default class ServiceApi
 
     public handleResponse<T>(response: AxiosResponse<T>): T
     {
-        if (response.statusText === STATUS_OK)
+        if (response.status >= 200 && response.status < 300)
         {
             return response.data;
         }
@@ -22,7 +20,7 @@ export default class ServiceApi
 
     public handleError(error: AxiosError)
     {
-        console.log("Error", error.message);
+        console.error("Error", error.message);
     }
 
     public post<T>(url: string, data: T): Promise<T>

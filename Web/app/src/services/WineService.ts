@@ -1,4 +1,4 @@
-import ServiceApi  from "./ServiceApi";
+import ServiceApi from "./ServiceApi";
 import { Wine } from "../store/wine/types";
 
 export default class WineServiceApi extends ServiceApi

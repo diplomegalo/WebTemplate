@@ -1,7 +1,7 @@
 import { WINE_REGISTERED, Wine, WINE_LOADED, WineActionTypes } from "./types";
+import initialState from "../initialState";
 
-const initialState: Wine[] = [];
-export const wineReducer = (state: Wine[] = initialState, action: WineActionTypes): Wine[] =>
+export const wineReducer = (state: Wine[] = initialState.wines, action: WineActionTypes): Wine[] =>
 {
     switch (action.type)
     {

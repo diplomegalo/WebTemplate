@@ -1,7 +1,7 @@
 import { Vineyard, VineyardActionTypes } from "./types";
+import initialState from "../initialState";
 
-const initialState: Vineyard[] = []
-export const vineyardReducer = (state: Vineyard[] = initialState, action: VineyardActionTypes): Vineyard[] =>
+export const vineyardReducer = (state: Vineyard[] = initialState.vineyards, action: VineyardActionTypes): Vineyard[] =>
 {
     switch (action.type)
     {
