@@ -1,39 +1,59 @@
-import { RootState } from "../../store";
-import { Action, bindActionCreators, Dispatch } from "redux";
-import * as modalActions from "../../store/modal/actions";
-import { connect } from "react-redux";
 import React from "react";
 import Button from "../elements/Button";
 
-const mapStateToProps = (state: RootState) => ({isOpen: state.modal.isOpen});
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({actions: bindActionCreators(modalActions, dispatch)});
+export type ModalEventType = {
+    onClose?: () => void;
+    onCancel?: () => void;
+    onValidate?: () => void;
+};
 
-type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
-type MapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
-type ModalPropsType =
-    {
-        id: string,
-        title: string,
-        showFooter?: boolean,
-        onClose?: () => void;
-        onCancel?: () => void;
-        onValidate?: () => void;
-        children: React.ReactNode;
-    };
+type ModalPropsType = {
+    id: string,
+    title: string
+    showFooter?: boolean,
+    children: React.ReactElement;
+} & ModalEventType;
 
-type ModalProps = ModalPropsType & MapStateToPropsType & MapDispatchToPropsType;
+export type ModalProps = ModalPropsType;
 
 const Modal = (props: ModalProps) =>
 {
     const {
-        children, title, id, showFooter, onCancel, onClose, onValidate, isOpen, actions
+        children, title, id, showFooter, onCancel, onClose, onValidate
     } = props;
 
-    const escape = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.target === document.getElementById(id) && actions.closeModal(id, onClose);
-    const close = () => actions.closeModal(id, onClose);
-    const cancel = () => actions.cancelModal(id, onCancel);
-    const validate = () => actions.validateModal(id, onValidate);
-    const open = () => actions.openModal(id);
+    const [isOpen, setIsOpen] = React.useState<boolean>(false);
+
+    const escape = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.target === document.getElementById(id) && setIsOpen(false);
+    const close = () =>
+    {
+        if (onClose)
+        {
+            onClose();
+        }
+        setIsOpen(false);
+    };
+    const cancel = () =>
+    {
+        if (onCancel)
+        {
+            onCancel();
+        }
+        setIsOpen(false);
+    }
+    const validate = () =>
+    {
+        if (onValidate)
+        {
+            onValidate();
+        }
+        setIsOpen(false);
+    }
+
+    const open = () =>
+    {
+        setIsOpen(true);
+    }
 
     const btnRef = React.useRef(null);
 
@@ -75,10 +95,11 @@ const Modal = (props: ModalProps) =>
                 <div id="modal-content" className="bg-white mt-1/5 m-auto border w-screen md:w-5/6 lg:w-3/4 xl:w-1/2">
                     <div id="modal-header" className="py-2 px-4 bg-gray-600 text-2xl text-white font-medium">
                         <span id="modal-title" key="modal-title" className="mr-2">{title}</span>
-                        <span id="close" className="float-right cursor-pointer hover:text-gray-300" onClick={close}>&times;</span>
+                        <span id="close" className="float-right cursor-pointer hover:text-gray-300"
+                              onClick={close}>&times;</span>
                     </div>
                     <div id="modal-body">
-                        {isOpen && children}
+                        {isOpen && React.cloneElement(children, {onCancel: cancel, onValidate: validate})}
                     </div>
                     {
                         showFooter ? footer() : <></>
@@ -89,4 +110,4 @@ const Modal = (props: ModalProps) =>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default Modal;

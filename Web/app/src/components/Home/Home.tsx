@@ -1,18 +1,10 @@
 import React from "react";
 import WineList from "containers/WineList";
+import { WineFormModalChild } from "../../containers/WineForm";
 import Modal from "../../containers/elements/Modal";
-import WineForm from "../../containers/WineForm";
-import { useDispatch } from "react-redux";
-import { cancelModal, validateModal } from "../../store/modal/actions";
-
 const Home = () =>
 {
     const modalId = "add-wine-modal";
-
-    const dispatch = useDispatch();
-    const onFormCancel = () => dispatch(cancelModal(modalId));
-    const onFormSubmit = () => dispatch(validateModal(modalId));
-
     return (
         <div>
             <div id="tools-bar" className="flex mb-4">
@@ -28,7 +20,7 @@ const Home = () =>
                 </div>
                 <div className="w-1/5">
                     <Modal title="Ajouter un vin à la cave" id={modalId}>
-                        <WineForm onCancel={onFormCancel} onSubmit={onFormSubmit} />
+                        <WineFormModalChild />
                     </Modal>
                 </div>
             </div>

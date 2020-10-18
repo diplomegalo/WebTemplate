@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import { Input, Select } from "containers/elements/Form";
 import { useForm } from "react-hook-form";
 import Button from "containers/elements/Button";
@@ -11,13 +11,14 @@ import { loadAppellations } from "../store/appellation/actions";
 import { registerWine } from "../store/wine/actions";
 import { Wine } from "../store/wine/types";
 import { toMap } from "../common/utils";
+import { ModalEventType } from "./elements/Modal";
 
 type mapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type WinePropsType = {
     onCancel?: () => void,
     onSubmit?: () => void,
-}
+};
 
 type WineProps = WinePropsType & mapStateToPropsType & mapDispatchToPropsType
 
@@ -114,3 +115,15 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
+
+export const withModal = <T extends WineProps>(WrappedComponent: React.ComponentType<T>) =>
+    class WithModal extends React.Component<T & ModalEventType>
+    {
+        render()
+        {
+            return (
+                <WrappedComponent {...this.props} onCancel={this.props.onCancel} onSubmit={this.props.onValidate} />);
+        }
+    };
+
+export const WineFormModalChild = withModal(connect(mapStateToProps, mapDispatchToProps)(WineForm));
