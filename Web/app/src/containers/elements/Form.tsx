@@ -13,7 +13,7 @@ type InputProps =
 type SelectProps =
     React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & {
     label: string,
-    options: Map<number, string> | Map<string, string> | string[],
+    options?: Map<number, string> | Map<string, string> | string[],
     placeholder?: string,
     error?: FieldError
 }
@@ -93,16 +93,19 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, r
         optionsElements.push((<option key="0" value="0">{placeholder}</option>));
     }
 
-    if (options instanceof Array)
+    if(options)
     {
-        options.forEach((e: string) => (
-            optionsElements.push(<option key={e} value={e}>{e}</option>)));
-    }
-    else
-    {
-        options.forEach((value:string, key: number | string) => (
-            // eslint-disable-next-line react/no-array-index-key
-            optionsElements.push(<option key={key} value={key}>{value}</option>)));
+        if (options instanceof Array)
+        {
+            options.forEach((e: string) => (
+                optionsElements.push(<option key={e} value={e}>{e}</option>)));
+        }
+        else
+        {
+            options.forEach((value: string, key: number | string) => (
+                // eslint-disable-next-line react/no-array-index-key
+                optionsElements.push(<option key={key} value={key}>{value}</option>)));
+        }
     }
 
     const className = error

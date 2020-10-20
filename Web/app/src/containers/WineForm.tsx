@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Input, Select } from "containers/elements/Form";
 import { useForm } from "react-hook-form";
 import Button from "containers/elements/Button";
@@ -11,7 +11,7 @@ import { loadAppellations } from "../store/appellation/actions";
 import { registerWine } from "../store/wine/actions";
 import { Wine } from "../store/wine/types";
 import { toMap } from "../common/utils";
-import { ModalEventType } from "./elements/Modal";
+import { WithModalProps } from "./elements/Modal";
 
 type mapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
@@ -24,8 +24,8 @@ type WineProps = WinePropsType & mapStateToPropsType & mapDispatchToPropsType
 
 export const registerWineSchema = yup.object({
     name: yup.string().required("Vous devez entrez le nom du vin."),
-    vineyard: yup.number().min(1, "Vous devez entrez le nom du vignoble."),
-    appellation: yup.number().min(1, "Vous devez entrez le nom de l'appellation."),
+    vineyardId: yup.number().min(1, "Vous devez entrez le nom du vignoble."),
+    appellationId: yup.number().min(1, "Vous devez entrez le nom de l'appellation."),
     vigneron: yup.string().nullable(),
     vintage: yup.number().min(new Date().getUTCFullYear() - 50, "Vous êtes sûr que votre vin est aussi vieux ?").max(new Date().getUTCFullYear(), "Mais c'est un vin du futur !"),
 });
@@ -35,7 +35,7 @@ const WineForm = (props: WineProps) =>
     const {onCancel, onSubmit, vineyards, appellations, actions} = props;
     const {register, watch, errors, handleSubmit, reset} = useForm<Wine>({validationSchema: registerWineSchema});
     const [vintageOptions, _] = React.useState<string[]>(Array.from(Array(50), (_, i) => (new Date().getUTCFullYear() - i).toString()));
-    const selectedVineyard: number = watch("vineyardId");
+    const selectedVineyardId: number = watch("vineyardId");
     const firstInput = React.useRef<HTMLInputElement | null>(null);
 
     React.useEffect(() =>
@@ -57,7 +57,7 @@ const WineForm = (props: WineProps) =>
         }
     }, []);
 
-    const appellationSubset = toMap(appellations.filter((ap) => ap.vineyardId === selectedVineyard), "id", "name")
+    const appellationSubset = toMap(appellations.filter((ap) => ap.vineyardId === selectedVineyardId), "id", "name");
 
     const submit = (data: Wine) =>
     {
@@ -84,9 +84,9 @@ const WineForm = (props: WineProps) =>
                         firstInput.current = e;
                     }} />
                     <Input label="Vigneron :" name="vigneron" ref={register} error={errors.vigneron} />
-                    <Select label="Vignoble : " name="vineyard" options={toMap(vineyards, "id", "name")}
+                    <Select label="Vignoble : " name="vineyardId" options={toMap(vineyards, "id", "name")}
                             placeholder="Choisissez un vignoble..." ref={register} error={errors.vineyardId} />
-                    <Select label="Appellation :" name="appellation" options={appellationSubset}
+                    <Select label="Appellation :" name="appellationId" options={appellationSubset}
                             placeholder="Choisissez une appellation..." ref={register} error={errors.appellationId} />
                     <Select label="Millésime :" name="vintage" options={vintageOptions} ref={register}
                             error={errors.vintage} />
@@ -116,14 +116,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
 
-export const withModal = <T extends WineProps>(WrappedComponent: React.ComponentType<T>) =>
-    class WithModal extends React.Component<T & ModalEventType>
-    {
-        render()
-        {
-            return (
-                <WrappedComponent {...this.props} onCancel={this.props.onCancel} onSubmit={this.props.onValidate} />);
-        }
-    };
+export const withModal = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & WithModalProps> =>
+    ({ onCancel, onValidate, ...props }):React.ReactElement => (<WrappedComponent {...props as T} onCancel={onCancel} onSubmit={onValidate} />);
 
-export const WineFormModalChild = withModal(connect(mapStateToProps, mapDispatchToProps)(WineForm));
+export const WineFormForModal = withModal(connect(mapStateToProps, mapDispatchToProps)(WineForm));

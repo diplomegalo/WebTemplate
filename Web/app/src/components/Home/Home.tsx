@@ -1,10 +1,11 @@
 import React from "react";
 import WineList from "containers/WineList";
-import { WineFormModalChild } from "../../containers/WineForm";
+import WineForm, { WineFormForModal } from "../../containers/WineForm";
 import Modal from "../../containers/elements/Modal";
 const Home = () =>
 {
     const modalId = "add-wine-modal";
+
     return (
         <div>
             <div id="tools-bar" className="flex mb-4">
@@ -20,7 +21,7 @@ const Home = () =>
                 </div>
                 <div className="w-1/5">
                     <Modal title="Ajouter un vin à la cave" id={modalId}>
-                        <WineFormModalChild />
+                        <WineFormForModal />
                     </Modal>
                 </div>
             </div>

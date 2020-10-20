@@ -1,6 +1,12 @@
 import React from "react";
 import Button from "../elements/Button";
 
+export interface WithModalProps
+{
+    onCancel?: () => void,
+    onValidate?: () => void
+}
+
 export type ModalEventType = {
     onClose?: () => void;
     onCancel?: () => void;
