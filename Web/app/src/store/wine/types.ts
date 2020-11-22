@@ -14,8 +14,10 @@ export type Wine =
 }
 
 export const WINE_REGISTERED = "WINE_REGISTERED";
+export const WINES_LOADED = "WINES_LOADED";
 export const WINE_LOADED = "WINE_LOADED";
 
 export type WineActionTypes =
     | { type: typeof WINE_REGISTERED, payload: { wine: Wine }, error: boolean, meta: any }
-    | { type: typeof WINE_LOADED, payload: { wines: Wine[] }, error: boolean, meta: any }
+    | { type: typeof WINES_LOADED, payload: { wines: Wine[] }, error: boolean, meta: any }
+    | { type: typeof WINE_LOADED, payload: { wine: Wine }, error: boolean, meta: any }

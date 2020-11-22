@@ -7,7 +7,7 @@ export interface WithModalProps
     onValidate?: () => void
 }
 
-export type ModalEventType = {
+type ModalEventType = {
     onClose?: () => void;
     onCancel?: () => void;
     onValidate?: () => void;

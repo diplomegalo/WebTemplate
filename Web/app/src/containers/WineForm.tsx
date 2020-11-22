@@ -8,16 +8,18 @@ import { Action, bindActionCreators, Dispatch } from "redux";
 import * as yup from "yup";
 import { loadVineyards } from "../store/vineyard/actions";
 import { loadAppellations } from "../store/appellation/actions";
-import { registerWine } from "../store/wine/actions";
+import { loadWine, registerWine } from "../store/wine/actions";
 import { Wine } from "../store/wine/types";
 import { toMap } from "../common/utils";
 import { WithModalProps } from "./elements/Modal";
+import { useParams } from "react-router";
 
 type mapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type WinePropsType = {
     onCancel?: () => void,
     onSubmit?: () => void,
+    wine: Wine,
 };
 
 type WineProps = WinePropsType & mapStateToPropsType & mapDispatchToPropsType
@@ -116,7 +118,18 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
 
-export const withModal = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & WithModalProps> =>
+const withModalProps = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & WithModalProps> =>
     ({ onCancel, onValidate, ...props }):React.ReactElement => (<WrappedComponent {...props as T} onCancel={onCancel} onSubmit={onValidate} />);
 
-export const WineFormForModal = withModal(connect(mapStateToProps, mapDispatchToProps)(WineForm));
+const withWineData = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & { loadWine: (id: string) => Wine }> =>
+    (props, ) =>
+    {
+        const { id } = useParams();
+        const { loadWine } = props;
+
+        const wine = loadWine(id);
+        return (<WrappedComponent {...props as T } wine={wine} />);
+    }
+
+export const WineFormWithQueryParams = withWineData(connect(mapStateToProps, mapDispatchToProps)(WineForm));
+export const WineFormWithModalProps = withModalProps(connect(mapStateToProps, mapDispatchToProps)(WineForm));

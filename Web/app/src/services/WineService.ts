@@ -15,4 +15,9 @@ export default class WineServiceApi extends ServiceApi
     {
         return await this.post("wines", data);
     }
+
+    public async getWine(id: string): Promise<Wine>
+    {
+        return await this.get(`wines/${id}`);
+    }
 }

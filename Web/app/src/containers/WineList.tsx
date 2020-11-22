@@ -50,7 +50,7 @@ const WineList = (props : WineProps) =>
             {
                 wines.map((wine, idx) => (
                     <li key={wine.id} className={`flex p-2 ${idx % 2 === 0 ? "bg-gray-200" : "bg-white"}`}>
-                        <div className="w-1/4">{wine.name}</div>
+                        <div className="w-1/4"><a href={`wine/${wine.id}`}>{wine.name}</a></div>
                         <div className="w-1/4">{wine.vineyard ? wine.vineyard.name : wine.vineyardId}</div>
                         <div className="w-1/4">{wine.appellation ? wine.appellation.name : wine.appellationId}</div>
                         <div className="w-1/4 text-center">{wine.vintage}</div>

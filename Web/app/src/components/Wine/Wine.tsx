@@ -1,6 +1,6 @@
 import React from "react"
-import WineForm from "../../containers/WineForm";
+import { WineFormWithQueryParams } from "../../containers/WineForm";
 
-const Wine = () => (<WineForm />);
+const Wine = () => (<WineFormWithQueryParams />);
 
 export default Wine;

@@ -1,7 +1,5 @@
- // eslint-disable-next-line import/no-extraneous-dependencies
 const jsonServer = require("json-server");
 const path = require("path");
-// eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require("cors");
 
 const server = jsonServer.create();
