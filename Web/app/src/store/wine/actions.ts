@@ -1,7 +1,6 @@
 import { WINE_REGISTERED, Wine, WINES_LOADED, WINE_LOADED } from "./types";
 import WineService from "../../services/WineService";
 import { Action, Dispatch } from "redux";
-import { MapDispatchToProps } from "react-redux";
 
 const wineRegistered = (wine: Wine, method: "UPDATE" | "INSERT") => ({ type: WINE_REGISTERED, payload: { wine }, error: false, meta: method});
 const winesLoaded = (wines: Wine[]) => ({ type: WINES_LOADED, payload: { wines }, error: false, meta: undefined });

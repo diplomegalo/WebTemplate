@@ -13,13 +13,18 @@ import { Wine } from "../store/wine/types";
 import { toMap } from "../common/utils";
 import { WithModalProps } from "./elements/Modal";
 import { useParams } from "react-router";
+import { Vineyard } from "../store/vineyard/types";
+import { Appellation } from "../store/appellation/types";
+import WineServiceApi from "../services/WineService";
 
 type mapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 type mapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type WinePropsType = {
     onCancel?: () => void,
     onSubmit?: () => void,
-    wine: Wine,
+    wine?: Wine,
+    vineyards?: Array<Vineyard>,
+    appellations?: Array<Appellation>
 };
 
 type WineProps = WinePropsType & mapStateToPropsType & mapDispatchToPropsType
@@ -34,8 +39,11 @@ export const registerWineSchema = yup.object({
 
 const WineForm = (props: WineProps) =>
 {
-    const {onCancel, onSubmit, vineyards, appellations, actions} = props;
-    const {register, watch, errors, handleSubmit, reset} = useForm<Wine>({validationSchema: registerWineSchema});
+    const {onCancel, onSubmit, vineyards, appellations, actions, wine} = props;
+    const {register, watch, errors, handleSubmit, reset} = useForm<Wine>({
+        validationSchema: registerWineSchema,
+        defaultValues: wine,
+    });
     const [vintageOptions, _] = React.useState<string[]>(Array.from(Array(50), (_, i) => (new Date().getUTCFullYear() - i).toString()));
     const selectedVineyardId: number = watch("vineyardId");
     const firstInput = React.useRef<HTMLInputElement | null>(null);
@@ -119,17 +127,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(WineForm);
 
 const withModalProps = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & WithModalProps> =>
-    ({ onCancel, onValidate, ...props }):React.ReactElement => (<WrappedComponent {...props as T} onCancel={onCancel} onSubmit={onValidate} />);
+    ({onCancel, onValidate, ...props}): React.ReactElement => (
+        <WrappedComponent {...props as T} onCancel={onCancel} onSubmit={onValidate} />);
 
-const withWineData = <T extends WinePropsType>(WrappedComponent: React.ComponentType<T>): React.FC<T & { loadWine: (id: string) => Wine }> =>
-    (props, ) =>
-    {
-        const { id } = useParams();
-        const { loadWine } = props;
-
-        const wine = loadWine(id);
-        return (<WrappedComponent {...props as T } wine={wine} />);
-    }
-
-export const WineFormWithQueryParams = withWineData(connect(mapStateToProps, mapDispatchToProps)(WineForm));
 export const WineFormWithModalProps = withModalProps(connect(mapStateToProps, mapDispatchToProps)(WineForm));
